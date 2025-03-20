@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/domain/models/todo.dart';
 import 'package:mvvm/ui/todo/view_models/todo_view_model.dart';
+import 'package:mvvm/ui/todo/widgets/components/add_todo_dialog.dart';
 import 'package:mvvm/ui/todo/widgets/components/todo_list_view.dart';
+
+typedef OnDeleteTodo = void Function(Todo todo);
 
 class TodoScreen extends StatefulWidget {
   final TodoViewModel todoViewModel;
@@ -33,15 +37,52 @@ class _TodoScreenState extends State<TodoScreen> {
         },
         child: ListenableBuilder(
           listenable: widget.todoViewModel,
+
           builder:
-              (context, _) => ListViewTodos(todos: widget.todoViewModel.todos),
+              (context, _) => ListViewTodos(
+                todos: widget.todoViewModel.todos,
+                onDeleteTodo: _onDeleteTodo,
+              ),
         ),
       ),
     );
   }
 
   void _addTodo() {
-    widget.todoViewModel.addTodo.execute('Novo Todo');
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AddTodoDialog(todoView: widget.todoViewModel),
+    );
+    // widget.todoViewModel.addTodo.execute('Novo Todo');
+  }
+
+  Future<void> _onDeleteTodo(Todo todo) async {
+    await widget.todoViewModel.deleteTodo.execute(todo);
+
+    if (widget.todoViewModel.deleteTodo.completed) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Tarefa "${todo.name}" removida com sucesso.'),
+            backgroundColor: Colors.lightGreen,
+          ),
+        );
+      }
+    } else if (widget.todoViewModel.deleteTodo.error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Erro na remoção da terefa "${todo.name}". Tente mais tarde',
+            ),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    }
   }
 
   // void _showMessage() {
