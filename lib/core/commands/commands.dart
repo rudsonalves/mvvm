@@ -28,7 +28,7 @@ abstract interface class Command<Output> extends ChangeNotifier {
     // Impede que a action seja executada mais de uma vez.
     if (_running) return;
 
-    _running == true;
+    _running = true;
     _result = null;
 
     notifyListeners();
