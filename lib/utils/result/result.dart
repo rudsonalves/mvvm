@@ -11,13 +11,13 @@ abstract interface class Result<T> {
   // factory Result.error(Exception error) => Error._(error);
 }
 
-final class Ok<T> implements Result<T> {
+final class Ok<T> extends Result<T> {
   final T value;
 
   Ok._(this.value);
 }
 
-final class Error<T> implements Result<T> {
+final class Error<T> extends Result<T> {
   final Exception error;
 
   Error._(this.error);
