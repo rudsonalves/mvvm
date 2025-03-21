@@ -22,18 +22,16 @@ class TodoViewModel extends ChangeNotifier {
   List<Todo> get todos => _todos;
 
   Future<Result> _load() async {
-    final result = await _todosRepository.get();
+    final result = await _todosRepository.getAll();
 
-    switch (result) {
-      case Ok<List<Todo>>():
+    result.fold(
+      onSuccess: (todos) {
         _todos.clear();
-        _todos.addAll(result.value);
+        _todos.addAll(todos);
         notifyListeners();
-        break;
-      case Error():
-        // TODO: implement logging
-        break;
-    }
+      },
+      onFailure: (err) {},
+    );
 
     return result;
   }
@@ -41,15 +39,13 @@ class TodoViewModel extends ChangeNotifier {
   Future<Result<Todo>> _addTodo(String name) async {
     final result = await _todosRepository.add(name);
 
-    switch (result) {
-      case Ok<Todo>():
-        _todos.add(result.value);
+    result.fold(
+      onSuccess: (todo) {
+        _todos.add(todo);
         notifyListeners();
-        break;
-      case Error():
-        // TODO: implement logging
-        break;
-    }
+      },
+      onFailure: (err) {},
+    );
 
     return result;
   }
@@ -57,14 +53,9 @@ class TodoViewModel extends ChangeNotifier {
   Future<Result<void>> _deleteTodo(Todo todo) async {
     final result = await _todosRepository.delete(todo);
 
-    switch (result) {
-      case Ok<void>():
-        _todos.remove(todo);
-        notifyListeners();
-        break;
-      case Error():
-        // TODO: implement logging
-        break;
+    if (result.isSuccess) {
+      _todos.remove(todo);
+      notifyListeners();
     }
 
     return result;
