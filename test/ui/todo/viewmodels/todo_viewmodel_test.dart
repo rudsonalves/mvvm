@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository.dart';
-import 'package:mvvm/data/repositories/todos/todos_reposotory_dev.dart';
+import 'package:mvvm/data/repositories/todos/todos_repository_dev.dart';
 import 'package:mvvm/ui/todo/view_models/todo_view_model.dart';
 
 void main() {
   late TodoViewModel todoViewModel;
   late TodosRepository todosRepository;
   setUp(() {
-    todosRepository = TodosReposotoryDev();
+    todosRepository = TodosRepositoryDev();
     todoViewModel = TodoViewModel(todosRepository: todosRepository);
   });
 
