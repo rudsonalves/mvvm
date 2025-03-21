@@ -12,7 +12,7 @@ class TodosReposotoryDev implements TodosRepository {
 
   @override
   Future<Result<Todo>> add(String name) async {
-    final lastTodoIndex = _todos.length;
+    final lastTodoIndex = _todos.length.toString();
     await Future.delayed(Duration(milliseconds: 200));
 
     final todo = Todo(id: lastTodoIndex, name: name);

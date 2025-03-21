@@ -24,9 +24,7 @@ final class Error<T> extends Result<T> {
 }
 
 extension ResultExtension on Object {
-  Result ok() {
-    return Result.ok(this);
-  }
+  Result ok() => Result.ok(this);
 }
 
 extension ResultException on Exception {
