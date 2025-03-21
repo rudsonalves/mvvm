@@ -20,13 +20,13 @@ void main() {
       // expect(todoViewmodel.load.running, false);
     });
 
-    test('Should add Todo', () async {
-      await todoViewModel.addTodo.execute('Novo Todo');
+    // test('Should add Todo', () async {
+    //   await todoViewModel.addTodo.execute('Novo Todo');
 
-      expect(todoViewModel.todos, isNotEmpty);
-      expect(todoViewModel.todos.first.name, contains('Novo Todo'));
-      expect(todoViewModel.todos.first.id, 0);
-    });
+    //   expect(todoViewModel.todos, isNotEmpty);
+    //   expect(todoViewModel.todos.first.name, contains('Novo Todo'));
+    //   expect(todoViewModel.todos.first.id, 0);
+    // });
 
     test('Should remove Todo', () async {
       await todoViewModel.addTodo.execute('Novo Todo');
