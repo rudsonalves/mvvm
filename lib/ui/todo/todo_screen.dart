@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/domain/models/todo.dart';
 import 'package:mvvm/ui/todo/view_models/todo_view_model.dart';
-import 'package:mvvm/ui/todo/widgets/components/add_todo_dialog.dart';
-import 'package:mvvm/ui/todo/widgets/components/todo_list_view.dart';
+import 'package:mvvm/ui/todo/components/add_todo_dialog.dart';
+import 'package:mvvm/ui/todo/components/todo_list_view.dart';
 
 typedef OnDeleteTodo = void Function(Todo todo);
 
@@ -54,7 +54,6 @@ class _TodoScreenState extends State<TodoScreen> {
       barrierDismissible: false,
       builder: (context) => AddTodoDialog(todoView: widget.todoViewModel),
     );
-    // widget.todoViewModel.addTodo.execute('Novo Todo');
   }
 
   Future<void> _onDeleteTodo(Todo todo) async {
@@ -84,13 +83,4 @@ class _TodoScreenState extends State<TodoScreen> {
       }
     }
   }
-
-  // void _showMessage() {
-  //   SchedulerBinding.instance.addPersistentFrameCallback((_) {
-  //     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Ocorreu um erro. Tente mais tarde.')),
-  //     );
-  //   });
-  // }
 }

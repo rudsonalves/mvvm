@@ -53,4 +53,36 @@ class TodosRepositoryRemote implements TodosRepository {
       return Result.error(Exception('Unknow error: $err'));
     }
   }
+
+  @override
+  Future<Result<Todo>> get(String id) async {
+    try {
+      final result = await _apiClient.getTodoById(id);
+
+      if (result.isSuccess) {
+        final todo = result.asOk.value;
+        _todosMap[todo.id!] = todo;
+      }
+      return result;
+    } catch (err) {
+      _todosMap.clear();
+      return Result.error(Exception('Unknow error: $err'));
+    }
+  }
+
+  @override
+  Future<Result<Todo>> update(Todo todo) async {
+    try {
+      final result = await _apiClient.updateTodo(todo);
+
+      if (result.isSuccess) {
+        final updateTodo = result.asOk.value;
+        _todosMap[updateTodo.id!] = updateTodo;
+      }
+      return result;
+    } catch (err) {
+      _todosMap.clear();
+      return Result.error(Exception('Unknow error: $err'));
+    }
+  }
 }
