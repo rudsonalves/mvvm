@@ -25,7 +25,7 @@ class ListTileTodo extends StatelessWidget {
         title: Text(todo.name),
         trailing: IconButton(
           onPressed: () => onDeleteTodo(todo),
-          icon: Icon(Icons.delete, color: Colors.redAccent),
+          icon: const Icon(Icons.delete, color: Colors.redAccent),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:mvvm/domain/models/todo.dart';
 import 'package:mvvm/ui/todo/view_models/todo_view_model.dart';
 import 'package:mvvm/ui/todo/components/add_todo_dialog.dart';
@@ -19,25 +20,28 @@ class _TodoScreenState extends State<TodoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Todo'), centerTitle: true, elevation: 5),
+      appBar: AppBar(
+        title: const Text('Todo'),
+        centerTitle: true,
+        elevation: 5,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addTodo,
-        child: Icon(Icons.add_rounded),
+        child: const Icon(Icons.add_rounded),
       ),
       body: ListenableBuilder(
         listenable: widget.todoViewModel.load,
         builder: (context, child) {
           if (widget.todoViewModel.load.running) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (widget.todoViewModel.load.error) {
-            return Center(child: Text('Ocorreu um Erro.'));
+            return const Center(child: Text('Ocorreu um Erro.'));
           }
 
           return child!;
         },
         child: ListenableBuilder(
           listenable: widget.todoViewModel,
-
           builder:
               (context, _) => ListViewTodos(
                 todos: widget.todoViewModel.todos,

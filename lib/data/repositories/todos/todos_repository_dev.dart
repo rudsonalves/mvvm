@@ -7,13 +7,13 @@ class TodosRepositoryDev implements TodosRepository {
 
   @override
   Future<Result<List<Todo>>> getAll() async {
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 200));
     return Result.ok(_todos);
   }
 
   @override
   Future<Result<Todo>> get(String id) async {
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 200));
     try {
       final findTodo = _todos.firstWhere((todo) => todo.id == id);
       return Result.ok(findTodo);
@@ -25,7 +25,7 @@ class TodosRepositoryDev implements TodosRepository {
   @override
   Future<Result<Todo>> add(String name) async {
     final lastTodoIndex = _todos.length.toString();
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 200));
 
     final todo = Todo(id: lastTodoIndex, name: name);
     _todos.add(todo);
@@ -35,7 +35,7 @@ class TodosRepositoryDev implements TodosRepository {
 
   @override
   Future<Result<void>> delete(Todo todo) async {
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 200));
     if (_todos.contains(todo)) {
       _todos.remove(todo);
       return Result.ok(null);
@@ -45,7 +45,7 @@ class TodosRepositoryDev implements TodosRepository {
 
   @override
   Future<Result<Todo>> update(Todo todo) async {
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 200));
     final index = _todos.indexWhere((t) => t.id! == todo.id!);
     if (index != -1) {
       _todos[index] = todo;

@@ -75,12 +75,12 @@ void main() {
 }
 
 Future<Result<String>> getOkResult() async {
-  await Future.delayed(Duration(milliseconds: 500));
+  await Future.delayed(const Duration(milliseconds: 500));
   return Result.ok('Operation has Sucesses');
 }
 
 Future<Result<bool>> getErrorResult() async {
-  await Future.delayed(Duration(milliseconds: 500));
+  await Future.delayed(const Duration(milliseconds: 500));
   return Result.error(Exception('An error occurred while genrating state'));
 }
 

@@ -24,7 +24,7 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Adicione nova Tarefa'),
+      title: const Text('Adicione nova Tarefa'),
       content: Form(
         key: _formKey,
         child: Column(
@@ -34,7 +34,7 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
               padding: const EdgeInsets.only(top: 18, bottom: 12),
               child: TextFormField(
                 controller: nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   label: Text('Tarefa'),
                   hintText: 'Entre a nova Tarefa',
                   border: OutlineInputBorder(),
@@ -53,19 +53,19 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
       actions: [
         FilledButton.icon(
           onPressed: _cancelTodo,
-          label: Text('Cancelar'),
-          icon: Icon(Icons.cancel),
+          label: const Text('Cancelar'),
+          icon: const Icon(Icons.cancel),
         ),
         FilledButton.icon(
           onPressed: _addTodo,
-          label: Text('Salvar'),
+          label: const Text('Salvar'),
           icon: ListenableBuilder(
             listenable: widget.todoView.addTodo,
             builder: (context, _) {
               if (!widget.todoView.addTodo.running) {
-                return Icon(Icons.add);
+                return const Icon(Icons.add);
               }
-              return SizedBox(
+              return const SizedBox(
                 width: 18,
                 height: 18,
                 child: CircularProgressIndicator(
@@ -94,16 +94,16 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
             context: context,
             builder:
                 (context) => AlertDialog(
-                  title: Text('Erro'),
-                  content: Text(
+                  title: const Text('Erro'),
+                  content: const Text(
                     'Desculpe. Ocorreu um erro ao criar uma nova tarefa. Tente mais tarde',
                   ),
                   backgroundColor: Colors.red.withValues(alpha: .75),
                   actions: [
                     FilledButton.icon(
                       onPressed: _cancelTodo,
-                      label: Text('Cancelar'),
-                      icon: Icon(Icons.cancel),
+                      label: const Text('Cancelar'),
+                      icon: const Icon(Icons.cancel),
                     ),
                   ],
                 ),
