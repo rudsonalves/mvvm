@@ -5,32 +5,30 @@ import 'package:mvvm/utils/commands/commands.dart';
 import 'package:mvvm/utils/result/result.dart';
 
 class TodoDetailsViewModel extends ChangeNotifier {
-  late Command0 load;
+  late Command1<Todo, String> load;
   late Command1<Todo, Todo> upgrade;
   final TodosRepository _todoRepository;
-  final String id;
 
-  TodoDetailsViewModel({
-    required TodosRepository todoRepository,
-    required this.id,
-  }) : _todoRepository = todoRepository {
-    load = Command0(_loadTodo)..execute();
+  TodoDetailsViewModel({required TodosRepository todoRepository})
+    : _todoRepository = todoRepository {
+    load = Command1<Todo, String>(_loadTodo);
     upgrade = Command1<Todo, Todo>(_upgradeTodo);
   }
 
-  late Todo todo;
+  late Todo _todo;
+  Todo get todo => _todo;
 
-  Future<Result<Todo>> _loadTodo() async {
+  Future<Result<Todo>> _loadTodo(String id) async {
     final result = await _todoRepository.get(id);
 
     result.fold(
       onSuccess: (todo) {
-        this.todo = todo;
-        notifyListeners();
+        _todo = todo;
       },
       onFailure: (error) {},
     );
 
+    notifyListeners();
     return result;
   }
 
@@ -39,12 +37,12 @@ class TodoDetailsViewModel extends ChangeNotifier {
 
     result.fold(
       onSuccess: (todo) {
-        this.todo = todo;
-        notifyListeners();
+        _todo = todo;
       },
       onFailure: (erro) {},
     );
 
+    notifyListeners();
     return result;
   }
 }
