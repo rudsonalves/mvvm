@@ -55,5 +55,21 @@ void main() {
       expect(updateResult.asOk.value.id, equals(updateFinal.id));
       expect(updateResult.asOk.value.name, equals(updateFinal.name));
     });
+
+    test('Should return a Todo of a know id', () async {
+      final todo = Todo(name: 'Conheça a id');
+
+      final result = await apiClient.postTodo(todo);
+      expect(result.asOk.value, isA<Todo>());
+
+      final newTodo = result.asOk.value;
+      final getResult = await apiClient.getTodoById(newTodo.id!);
+      expect(getResult.isSuccess, true);
+
+      final getTodo = getResult.asOk.value;
+      expect(getTodo.id, isNotNull);
+      expect(getTodo.id, equals(newTodo.id!));
+      expect(getTodo.name, equals(newTodo.name));
+    });
   });
 }

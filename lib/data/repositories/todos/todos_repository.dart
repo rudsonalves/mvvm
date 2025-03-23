@@ -7,4 +7,8 @@ abstract interface class TodosRepository {
   Future<Result<Todo>> add(String name);
 
   Future<Result<void>> delete(Todo todo);
+
+  Future<Result<Todo>> update(Todo todo);
+
+  Future<Result<Todo>> get(String id);
 }

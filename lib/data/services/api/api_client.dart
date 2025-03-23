@@ -47,6 +47,33 @@ class ApiClient {
     }
   }
 
+  Future<Result<Todo>> getTodoById(String id) async {
+    final client = _clientHttpFactory();
+    try {
+      final request = await client.get(_host, _port, '$todosPath/$id');
+      final response = await request.close();
+
+      if (response.statusCode == HttpStatus.ok) {
+        final json = await response.transform(utf8.decoder).join();
+        final todo = Todo.fromJson(json);
+
+        return Result.ok(todo);
+      } else {
+        throw Exception(
+          HttpException('Invalid response: ${response.statusCode}'),
+        );
+      }
+    } on Exception catch (err) {
+      log(err.toString());
+      return Result.error(err);
+    } catch (err) {
+      log(err.toString());
+      return Result.error(Exception(err));
+    } finally {
+      client.close();
+    }
+  }
+
   Future<Result<Todo>> postTodo(Todo todo) async {
     final client = _clientHttpFactory();
 
