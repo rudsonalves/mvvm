@@ -6,6 +6,7 @@ import 'package:mvvm/ui/todo/components/add_todo_dialog.dart';
 import 'package:mvvm/ui/todo/components/todo_list_view.dart';
 
 typedef OnDeleteTodo = void Function(Todo todo);
+typedef OnDoneTodo = void Function(Todo todo);
 
 class TodoScreen extends StatefulWidget {
   final TodoViewModel todoViewModel;
@@ -46,6 +47,7 @@ class _TodoScreenState extends State<TodoScreen> {
               (context, _) => ListViewTodos(
                 todos: widget.todoViewModel.todos,
                 onDeleteTodo: _onDeleteTodo,
+                onDoneTodo: _onDoneTodo,
               ),
         ),
       ),
@@ -58,6 +60,10 @@ class _TodoScreenState extends State<TodoScreen> {
       barrierDismissible: false,
       builder: (context) => AddTodoDialog(todoView: widget.todoViewModel),
     );
+  }
+
+  Future<void> _onDoneTodo(Todo todo) async {
+    await widget.todoViewModel.updateTodo.execute(todo);
   }
 
   Future<void> _onDeleteTodo(Todo todo) async {

@@ -12,6 +12,12 @@ class TodosRepositoryDev implements TodosRepository {
   }
 
   @override
+  Map<String, Todo> get todosMap => {};
+
+  @override
+  List<Todo> get todos => _todos;
+
+  @override
   Future<Result<Todo>> get(String id) async {
     await Future.delayed(const Duration(milliseconds: 200));
     try {
@@ -23,14 +29,15 @@ class TodosRepositoryDev implements TodosRepository {
   }
 
   @override
-  Future<Result<Todo>> add(String name) async {
+  Future<Result<Todo>> add(Todo todo) async {
     final lastTodoIndex = _todos.length.toString();
     await Future.delayed(const Duration(milliseconds: 200));
 
-    final todo = Todo(id: lastTodoIndex, name: name);
-    _todos.add(todo);
+    final newTodo = todo.copyWith(id: lastTodoIndex);
 
-    return Result.ok(todo);
+    _todos.add(newTodo);
+
+    return Result.ok(newTodo);
   }
 
   @override

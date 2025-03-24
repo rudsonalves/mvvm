@@ -4,7 +4,74 @@ A new Flutter project.
 
 # Changelog
 
-## 2025/03/23 - version: 0.5.0+01
+## 2025/03/24 - version: 0.5.01+02
+
+
+This update introduces significant improvements to the Todo feature, including model enhancements, repository changes, UI adjustments, and extended ViewModel logic to support a more complete Todo experience.
+
+### Changes made:
+
+1. **lib/data/repositories/todos/todos_repository.dart**:
+   - Added `todosMap` and `todos` getters to expose internal state.
+   - Changed the `add` method to accept a `Todo` object instead of a string.
+
+2. **lib/data/repositories/todos/todos_repository_dev.dart**:
+   - Implemented `todosMap` getter to return an empty map.
+   - Implemented `todos` getter to return internal `_todos` list.
+   - Updated `add` method to use `Todo` object instead of a name string, assigning a new ID and copying the todo.
+
+3. **lib/data/repositories/todos/todos_repository_remote.dart**:
+   - Imported `dart:developer` for logging.
+   - Implemented `todosMap` and updated `todos` to use `_todosMap`.
+   - Refactored `add`, `delete`, `getAll`, `get`, and `update` methods to use `result.fold` for success and failure handling, adding logs for errors.
+
+4. **lib/data/services/api/api_client.dart**:
+   - Set `Content-Type` header explicitly with charset UTF-8 for `POST` and `PUT` requests.
+   - Ensured JSON body is sent correctly when posting or updating a `Todo`.
+
+5. **lib/domain/models/todo.dart**:
+   - Added `description` and `done` fields to `Todo` model.
+   - Updated `toMap`, `fromMap`, `copyWith`, and constructors to handle the new fields.
+
+6. **lib/ui/todo/components/add_todo_dialog.dart**:
+   - Added `descriptionController` for capturing task descriptions.
+   - Included a new `TextFormField` for description input with validation.
+   - Updated todo creation to include both `name` and `description`.
+
+7. **lib/ui/todo/components/list_tile_todo.dart**:
+   - Added support for `done` checkbox to mark task completion.
+   - Displayed `description` below the title if available.
+   - Included `onDoneTodo` callback for updating task status.
+
+8. **lib/ui/todo/components/todo_list_view.dart**:
+   - Added `onDoneTodo` callback and passed it to `ListTileTodo`.
+
+9. **lib/ui/todo/todo_screen.dart**:
+   - Defined `OnDoneTodo` typedef.
+   - Added `_onDoneTodo` method to handle task completion updates.
+   - Passed `onDoneTodo` to `ListViewTodos`.
+
+10. **lib/ui/todo/view_models/todo_view_model.dart**:
+    - Updated `addTodo` to use `Command1<Todo, Todo>`.
+    - Added `updateTodo` command for updating task state.
+    - Simplified `_addTodo`, `_deleteTodo`, and `_load` methods to rely on repository logic and notify listeners.
+    - Exposed repository's `todosMap` and `todos`.
+
+11. **server/db.json**:
+    - Updated mock data to include `description` and `done` fields.
+
+12. **test/data/services/api/api_client_test.dart**:
+    - Updated all test cases to use `Todo` with `description`.
+
+13. **test/ui/todo/viewmodels/todo_viewmodel_test.dart**:
+    - Updated test cases to use the new `Todo` constructor with `description`.
+
+### Conclusion:
+
+These changes enhance the flexibility and completeness of the Todo feature by supporting task descriptions, completion tracking, and a more robust ViewModel-repository architecture. The system is now better equipped to handle full-featured Todo entries across the UI, backend, and tests.
+
+
+## 2025/03/23 - version: 0.5.00+01
 
 This commit introduces several structural and functional improvements to the application, focusing on modularity, code reuse, and enhanced readability.
 

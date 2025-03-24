@@ -80,6 +80,13 @@ class ApiClient {
     try {
       final request = await client.post(_host, _port, todosPath);
 
+      // Define o content-type corretamente com charset UTF-8
+      request.headers.set(
+        HttpHeaders.contentTypeHeader,
+        'application/json; charset=utf-8',
+      );
+
+      // Envia o corpo como JSON
       request.write(todo.toJson());
 
       final response = await request.close();
@@ -140,6 +147,13 @@ class ApiClient {
     try {
       final request = await client.put(_host, _port, '$todosPath/${todo.id}');
 
+      // Define o content-type corretamente com charset UTF-8
+      request.headers.set(
+        HttpHeaders.contentTypeHeader,
+        'application/json; charset=utf-8',
+      );
+
+      // Envia o corpo como JSON
       request.write(todo.toJson());
 
       final response = await request.close();

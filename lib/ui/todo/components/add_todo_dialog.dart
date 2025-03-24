@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/domain/models/todo.dart';
 import 'package:mvvm/ui/todo/view_models/todo_view_model.dart';
 
 class AddTodoDialog extends StatefulWidget {
@@ -12,11 +13,13 @@ class AddTodoDialog extends StatefulWidget {
 
 class _AddTodoDialogState extends State<AddTodoDialog> {
   final nameController = TextEditingController();
+  final descriptionConreoller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     nameController.dispose();
+    descriptionConreoller.dispose();
 
     super.dispose();
   }
@@ -35,10 +38,29 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
               child: TextFormField(
                 controller: nameController,
                 decoration: const InputDecoration(
-                  label: Text('Tarefa'),
-                  hintText: 'Entre a nova Tarefa',
+                  label: Text('Título'),
+                  hintText: 'Título da tarefa',
                   border: OutlineInputBorder(),
                 ),
+                textCapitalization: TextCapitalization.words,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Preencha o campo Tarefa';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 18, bottom: 12),
+              child: TextFormField(
+                controller: descriptionConreoller,
+                decoration: const InputDecoration(
+                  label: Text('Descrição'),
+                  hintText: 'Descrição da tarefa',
+                  border: OutlineInputBorder(),
+                ),
+                textCapitalization: TextCapitalization.sentences,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Preencha o campo Tarefa';
@@ -84,7 +106,12 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
     if (widget.todoView.addTodo.running) return;
 
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      await widget.todoView.addTodo.execute(nameController.text.trim());
+      final newTodo = Todo(
+        name: nameController.text.trim(),
+        description: descriptionConreoller.text.trim(),
+      );
+
+      await widget.todoView.addTodo.execute(newTodo);
       if (widget.todoView.addTodo.completed) {
         if (mounted) Navigator.pop(context);
       }

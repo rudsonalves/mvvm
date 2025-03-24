@@ -7,58 +7,44 @@ import 'package:mvvm/domain/models/todo.dart';
 
 class TodoViewModel extends ChangeNotifier {
   late Command0 load;
-  late Command1<Todo, String> addTodo;
+  late Command1<Todo, Todo> addTodo;
   late Command1<void, Todo> deleteTodo;
+  late Command1<Todo, Todo> updateTodo;
   final TodosRepository _todosRepository;
 
   TodoViewModel({required todosRepository})
     : _todosRepository = todosRepository {
     load = Command0(_load)..execute();
-    addTodo = Command1<Todo, String>(_addTodo);
+    addTodo = Command1<Todo, Todo>(_addTodo);
     deleteTodo = Command1<void, Todo>(_deleteTodo);
+    updateTodo = Command1<Todo, Todo>(_updateTodo);
   }
 
-  final List<Todo> _todos = [];
+  Map<String, Todo> get todosMap => _todosRepository.todosMap;
 
-  List<Todo> get todos => _todos;
+  List<Todo> get todos => _todosRepository.todos;
 
   Future<Result> _load() async {
     final result = await _todosRepository.getAll();
-
-    result.fold(
-      onSuccess: (todos) {
-        _todos.clear();
-        _todos.addAll(todos);
-        notifyListeners();
-      },
-      onFailure: (err) {},
-    );
-
+    notifyListeners();
     return result;
   }
 
-  Future<Result<Todo>> _addTodo(String name) async {
-    final result = await _todosRepository.add(name);
+  Future<Result<Todo>> _addTodo(Todo todo) async {
+    final result = await _todosRepository.add(todo);
+    notifyListeners();
+    return result;
+  }
 
-    result.fold(
-      onSuccess: (todo) {
-        _todos.add(todo);
-        notifyListeners();
-      },
-      onFailure: (err) {},
-    );
-
+  Future<Result<Todo>> _updateTodo(Todo todo) async {
+    final result = await _todosRepository.update(todo);
+    notifyListeners();
     return result;
   }
 
   Future<Result<void>> _deleteTodo(Todo todo) async {
     final result = await _todosRepository.delete(todo);
-
-    if (result.isSuccess) {
-      _todos.remove(todo);
-      notifyListeners();
-    }
-
+    notifyListeners();
     return result;
   }
 }

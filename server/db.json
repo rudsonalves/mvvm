@@ -1,12 +1,16 @@
 {
   "todos": [
     {
-      "id": "aa16",
-      "name": "Comprar Leitinho"
+      "id": "90ae",
+      "name": "Novo Todo",
+      "description": "Este todo possui descrição",
+      "done": false
     },
     {
-      "id": "c274",
-      "name": "Ir ao aniversario da mamae"
+      "id": "48ad",
+      "name": "Novo com Descrição",
+      "description": "Este possui descrição e correção no acentos.",
+      "done": true
     }
   ]
 }

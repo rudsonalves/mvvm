@@ -7,11 +7,13 @@ import 'package:mvvm/ui/todo/todo_screen.dart';
 class ListTileTodo extends StatelessWidget {
   final Todo todo;
   final OnDeleteTodo onDeleteTodo;
+  final OnDoneTodo onDoneTodo;
 
   const ListTileTodo({
     super.key,
     required this.todo,
     required this.onDeleteTodo,
+    required this.onDoneTodo,
   });
 
   @override
@@ -21,8 +23,26 @@ class ListTileTodo extends StatelessWidget {
         onTap: () {
           context.push(Routes.todoDetails(todo.id!));
         },
-        leading: Text(todo.id.toString()),
+        // leading: IconButton(
+        //   icon: Icon(
+        //     todo.done
+        //         ? Icons.task_alt_rounded
+        //         : Icons.radio_button_unchecked_rounded,
+        //     color: todo.done ? Colors.greenAccent : Colors.redAccent,
+        //   ),
+        //   onPressed: () => onDoneTodo(todo.copyWith(done: !todo.done)),
+        // ),
+        leading: Checkbox(
+          value: todo.done,
+          onChanged: (value) {
+            if (value == null) return;
+
+            onDoneTodo(todo.copyWith(done: value));
+          },
+        ),
         title: Text(todo.name),
+        subtitle:
+            todo.description.trim().isNotEmpty ? Text(todo.description) : null,
         trailing: IconButton(
           onPressed: () => onDeleteTodo(todo),
           icon: const Icon(Icons.delete, color: Colors.redAccent),
