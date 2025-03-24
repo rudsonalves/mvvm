@@ -4,13 +4,13 @@
       "id": "90ae",
       "name": "Novo Todo",
       "description": "Este todo possui descrição",
-      "done": false
+      "done": true
     },
     {
       "id": "48ad",
       "name": "Novo com Descrição",
       "description": "Este possui descrição e correção no acentos.",
-      "done": true
+      "done": false
     }
   ]
 }

@@ -23,23 +23,23 @@ class ListTileTodo extends StatelessWidget {
         onTap: () {
           context.push(Routes.todoDetails(todo.id!));
         },
-        // leading: IconButton(
-        //   icon: Icon(
-        //     todo.done
-        //         ? Icons.task_alt_rounded
-        //         : Icons.radio_button_unchecked_rounded,
-        //     color: todo.done ? Colors.greenAccent : Colors.redAccent,
-        //   ),
-        //   onPressed: () => onDoneTodo(todo.copyWith(done: !todo.done)),
-        // ),
-        leading: Checkbox(
-          value: todo.done,
-          onChanged: (value) {
-            if (value == null) return;
-
-            onDoneTodo(todo.copyWith(done: value));
-          },
+        leading: IconButton(
+          onPressed: () => onDoneTodo(todo.copyWith(done: !todo.done)),
+          icon: Icon(
+            todo.done
+                ? Icons.task_alt_rounded
+                : Icons.radio_button_unchecked_rounded,
+            color: todo.done ? Colors.greenAccent : null,
+          ),
         ),
+        // Checkbox(
+        //   value: todo.done,
+        //   onChanged: (value) {
+        //     if (value == null) return;
+
+        //     onDoneTodo(todo.copyWith(done: value));
+        //   },
+        // ),
         title: Text(todo.name),
         subtitle:
             todo.description.trim().isNotEmpty ? Text(todo.description) : null,

@@ -4,6 +4,29 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/03/24 - version: 0.5.02+03
+
+This update refines the Todo list UI and improves the layout of the Todo details screen to enhance the user experience and visual consistency.
+
+### Changes made:
+
+1. **lib/ui/todo/components/list_tile_todo.dart**:
+   - Replaced the `Checkbox` widget with an `IconButton` to toggle the `done` status of a Todo using a more intuitive icon representation.
+   - Applied conditional coloring (green accent) to the icon when the Todo is marked as done.
+   - Commented out the previous `Checkbox` implementation for potential future reference.
+
+2. **lib/ui/todo_details/todo_details_screen.dart**:
+   - Wrapped the body content with a `Padding` widget to apply consistent spacing around the details view.
+   - Adjusted indentation and structure of `ListenableBuilder` for improved readability and maintainability.
+
+3. **server/db.json**:
+   - Updated the `done` field values for mock Todo entries to reflect different states (toggled `true` and `false` values) for testing and UI validation purposes.
+
+### Conclusion:
+
+These improvements provide a more polished and user-friendly interface by replacing the checkbox with a dynamic icon for toggling task completion and ensuring consistent layout padding in the Todo details screen.
+
+
 ## 2025/03/24 - version: 0.5.01+02
 
 
