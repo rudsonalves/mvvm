@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:mvvm/domain/models/todo.dart';
-import 'package:mvvm/ui/todo/view_models/todo_view_model.dart';
+import 'package:mvvm/ui/todo/todo_view_model.dart';
 import 'package:mvvm/ui/todo/components/add_todo_dialog.dart';
 import 'package:mvvm/ui/todo/components/todo_list_view.dart';
 
@@ -30,25 +30,28 @@ class _TodoScreenState extends State<TodoScreen> {
         onPressed: _addTodo,
         child: const Icon(Icons.add_rounded),
       ),
-      body: ListenableBuilder(
-        listenable: widget.todoViewModel.load,
-        builder: (context, child) {
-          if (widget.todoViewModel.load.running) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (widget.todoViewModel.load.error) {
-            return const Center(child: Text('Ocorreu um Erro.'));
-          }
-
-          return child!;
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: ListenableBuilder(
-          listenable: widget.todoViewModel,
-          builder:
-              (context, _) => ListViewTodos(
-                todos: widget.todoViewModel.todos,
-                onDeleteTodo: _onDeleteTodo,
-                onDoneTodo: _onDoneTodo,
-              ),
+          listenable: widget.todoViewModel.load,
+          builder: (context, child) {
+            if (widget.todoViewModel.load.running) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (widget.todoViewModel.load.error) {
+              return const Center(child: Text('Ocorreu um Erro.'));
+            }
+
+            return child!;
+          },
+          child: ListenableBuilder(
+            listenable: widget.todoViewModel,
+            builder:
+                (context, _) => ListViewTodos(
+                  todos: widget.todoViewModel.todos,
+                  onDeleteTodo: _onDeleteTodo,
+                  onDoneTodo: _onDoneTodo,
+                ),
+          ),
         ),
       ),
     );

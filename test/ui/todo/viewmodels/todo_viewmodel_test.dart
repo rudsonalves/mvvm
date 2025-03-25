@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository_dev.dart';
 import 'package:mvvm/domain/models/todo.dart';
-import 'package:mvvm/ui/todo/view_models/todo_view_model.dart';
+import 'package:mvvm/ui/todo/todo_view_model.dart';
 
 void main() {
   late TodoViewModel todoViewModel;

@@ -1,7 +1,7 @@
 name: mvvm
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 0.5.02+03
+version: 0.5.02+04
 
 environment:
   sdk: ^3.7.2
@@ -12,6 +12,7 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   go_router: ^14.8.1
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:

@@ -18,7 +18,11 @@ class ListTileTodo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
+      color: colorScheme.surfaceContainerHigh,
+      elevation: 0,
       child: ListTile(
         onTap: () {
           context.push(Routes.todoDetails(todo.id!));
@@ -29,7 +33,7 @@ class ListTileTodo extends StatelessWidget {
             todo.done
                 ? Icons.task_alt_rounded
                 : Icons.radio_button_unchecked_rounded,
-            color: todo.done ? Colors.greenAccent : null,
+            color: todo.done ? Colors.green : null,
           ),
         ),
         // Checkbox(

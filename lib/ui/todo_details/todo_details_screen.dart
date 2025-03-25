@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/ui/todo_details/components/todo_edit.dart';
 
-import 'package:mvvm/ui/todo_details/view_models/todo_details_view_model.dart';
+import 'package:mvvm/ui/todo_details/todo_details_view_model.dart';
 
 class TodoDetailsScreen extends StatefulWidget {
   final TodoDetailsViewModel todoDetailsViewModel;

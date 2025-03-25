@@ -4,6 +4,68 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/03/24 - version: 0.5.02+04
+
+This update introduces a complete theming system with dynamic light and dark modes, along with minor structural and visual improvements throughout the app.
+
+### Changes made:
+
+1. **assets/images/theme_dark.png**:
+   - Added a new dark theme image asset for potential theme preview or UI usage.
+
+2. **assets/images/theme_light.png**:
+   - Added a new light theme image asset for potential theme preview or UI usage.
+
+3. **lib/main.dart**:
+   - Integrated dynamic theme switching based on platform brightness.
+   - Applied custom text themes using `createTextTheme`.
+   - Initialized the `MaterialTheme` class to manage theme variants.
+
+4. **lib/routing/router.dart**:
+   - Updated imports for `TodoViewModel` and `TodoDetailsViewModel` to reflect their new file locations.
+
+5. **lib/ui/core/themes/text_theme.dart**:
+   - Created utility to generate `TextTheme` using `google_fonts` for consistent typography customization.
+
+6. **lib/ui/core/themes/theme.dart**:
+   - Implemented a fully custom theming system with support for light, dark, medium contrast, and high contrast color schemes.
+   - Defined the `MaterialTheme` class and theme generation methods using `ColorScheme` and `ThemeData`.
+
+7. **lib/ui/todo/components/add_todo_dialog.dart**:
+   - Updated import path for `TodoViewModel` due to file relocation.
+
+8. **lib/ui/todo/components/list_tile_todo.dart**:
+   - Applied custom theming for the background of each Todo card using `Theme.of(context).colorScheme`.
+   - Replaced static color with themed green for completed todos.
+
+9. **lib/ui/todo/todo_screen.dart**:
+   - Added padding to the screen body for better layout structure.
+   - Updated import path for `TodoViewModel`.
+
+10. **lib/ui/todo/view_models/todo_view_model.dart → lib/ui/todo/todo_view_model.dart**:
+    - Renamed file for consistency and better organization.
+
+11. **lib/ui/todo_details/todo_details_screen.dart**:
+    - Updated import path for `TodoDetailsViewModel`.
+
+12. **lib/ui/todo_details/view_models/todo_details_view_model.dart → lib/ui/todo_details/todo_details_view_model.dart**:
+    - Renamed file to align with organizational structure and naming conventions.
+
+13. **pubspec.lock**:
+    - Added several new dependencies, including `google_fonts`, `crypto`, `ffi`, `path_provider`, and related packages.
+    - Updated `flutter` SDK version constraint to `>=3.27.0`.
+
+14. **pubspec.yaml**:
+    - Added `google_fonts` package as a direct dependency for custom text theming.
+
+15. **test/ui/todo/viewmodels/todo_viewmodel_test.dart**:
+    - Updated import path for `TodoViewModel` to match the new file location.
+
+### Conclusion:
+
+This update establishes a robust and extensible theming infrastructure, enabling support for multiple visual styles and improved UI consistency. It also improves code organization and prepares the application for future customization and accessibility enhancements.
+
+
 ## 2025/03/24 - version: 0.5.02+03
 
 This update refines the Todo list UI and improves the layout of the Todo details screen to enhance the user experience and visual consistency.
