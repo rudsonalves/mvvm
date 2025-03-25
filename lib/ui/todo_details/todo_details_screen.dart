@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/ui/todo_details/components/todo_edit.dart';
+import 'package:mvvm/ui/core/components/add_todo_dialog.dart';
+import 'package:mvvm/ui/todo_details/components/todo_details_card.dart';
 
 import 'package:mvvm/ui/todo_details/todo_details_view_model.dart';
 
@@ -35,11 +36,25 @@ class _TodoDetailsScreenState extends State<TodoDetailsScreen> {
           child: ListenableBuilder(
             listenable: widget.todoDetailsViewModel,
             builder:
-                (context, _) =>
-                    TodoEdit(todo: widget.todoDetailsViewModel.todo),
+                (context, _) => TodoDetailsCard(
+                  todo: widget.todoDetailsViewModel.todo,
+                  editTodo: _editTodo,
+                ),
           ),
         ),
       ),
+    );
+  }
+
+  void _editTodo() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder:
+          (context) => AddTodoDialog(
+            todo: widget.todoDetailsViewModel.todo,
+            todoAction: widget.todoDetailsViewModel.upgrade,
+          ),
     );
   }
 }
