@@ -22,7 +22,7 @@ class _TodoScreenState extends State<TodoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todo'),
+        title: const Text('Todos'),
         centerTitle: true,
         elevation: 5,
       ),

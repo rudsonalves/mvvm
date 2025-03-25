@@ -16,13 +16,13 @@ void main() {
     });
 
     test('Shoult create a Ok Result with Extension', () {
-      final result = 'Ok'.ok();
+      final result = Result.ok('Ok');
 
       expect(result.asOk.value, 'Ok');
     });
 
     test('Shoult create a Error Result with Extension', () {
-      final result = Exception('Error').error();
+      final result = Result.error(Exception('Error'));
 
       expect(result.asError.error, isA<Exception>());
     });

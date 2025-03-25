@@ -22,28 +22,29 @@ class ListTileTodo extends StatelessWidget {
 
     return Card(
       color: colorScheme.surfaceContainerHigh,
-      elevation: 0,
+      elevation: 1,
       child: ListTile(
         onTap: () {
           context.push(Routes.todoDetails(todo.id!));
         },
-        leading: IconButton(
-          onPressed: () => onDoneTodo(todo.copyWith(done: !todo.done)),
-          icon: Icon(
-            todo.done
-                ? Icons.task_alt_rounded
-                : Icons.radio_button_unchecked_rounded,
-            color: todo.done ? Colors.green : null,
-          ),
-        ),
-        // Checkbox(
-        //   value: todo.done,
-        //   onChanged: (value) {
-        //     if (value == null) return;
-
-        //     onDoneTodo(todo.copyWith(done: value));
-        //   },
+        leading:
+        // IconButton(
+        //   onPressed: () => onDoneTodo(todo.copyWith(done: !todo.done)),
+        //   icon: Icon(
+        //     todo.done
+        //         ? Icons.task_alt_rounded
+        //         : Icons.radio_button_unchecked_rounded,
+        //     color: todo.done ? Colors.green : null,
+        //   ),
         // ),
+        Checkbox(
+          value: todo.done,
+          onChanged: (value) {
+            if (value == null) return;
+
+            onDoneTodo(todo.copyWith(done: value));
+          },
+        ),
         title: Text(todo.name),
         subtitle:
             todo.description.trim().isNotEmpty ? Text(todo.description) : null,

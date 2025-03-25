@@ -35,7 +35,7 @@ void main() {
       expect(newTodo.id, isNotNull);
 
       final resultDelete = await apiClient.deleteTodo(newTodo);
-      expect(resultDelete.ok(), isNotNull);
+      expect(resultDelete, isNotNull);
 
       final resultAgain = await apiClient.getTodos();
       expect(todos.length, equals(resultAgain.asOk.value.length));
@@ -67,7 +67,7 @@ void main() {
 
       final newTodo = result.asOk.value;
       final getResult = await apiClient.getTodoById(newTodo.id!);
-      expect(getResult.isSuccess, true);
+      expect(getResult.isOk, true);
 
       final getTodo = getResult.asOk.value;
       expect(getTodo.id, isNotNull);
