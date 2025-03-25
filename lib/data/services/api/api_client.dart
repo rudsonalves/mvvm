@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:mvvm/domain/models/todo.dart';
-import 'package:mvvm/utils/result/result.dart';
+import '/domain/models/todo.dart';
+import '/utils/result/result.dart';
 
 class ApiClient {
   final String _host;

@@ -1,9 +1,9 @@
 import 'dart:developer';
 
-import 'package:mvvm/data/repositories/todos/todos_repository.dart';
-import 'package:mvvm/data/services/api/api_client.dart';
-import 'package:mvvm/domain/models/todo.dart';
-import 'package:mvvm/utils/result/result.dart';
+import '/data/repositories/todos/todos_repository.dart';
+import '/data/services/api/api_client.dart';
+import '/domain/models/todo.dart';
+import '/utils/result/result.dart';
 
 class TodosRepositoryRemote implements TodosRepository {
   final ApiClient _apiClient;

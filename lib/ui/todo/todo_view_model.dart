@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:mvvm/utils/commands/commands.dart';
-import 'package:mvvm/utils/result/result.dart';
-import 'package:mvvm/data/repositories/todos/todos_repository.dart';
-import 'package:mvvm/domain/models/todo.dart';
+import '/utils/commands/commands.dart';
+import '/utils/result/result.dart';
+import '/data/repositories/todos/todos_repository.dart';
+import '/domain/models/todo.dart';
 
 class TodoViewModel extends ChangeNotifier {
   late Command0 load;

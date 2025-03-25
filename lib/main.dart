@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:mvvm/routing/router.dart';
-import 'package:mvvm/ui/core/themes/text_theme.dart';
-import 'package:mvvm/ui/core/themes/theme.dart';
+import '/routing/router.dart';
+import '/ui/core/themes/text_theme.dart';
+import '/ui/core/themes/theme.dart';
 
 void main() {
   runApp(const AppMaterial());
