@@ -17,7 +17,11 @@ class _TodoDetailsScreenState extends State<TodoDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Detalhes')),
+      appBar: AppBar(
+        title: const Text('Detalhes'),
+        centerTitle: true,
+        elevation: 5,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: ListenableBuilder(

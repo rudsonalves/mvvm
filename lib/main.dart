@@ -15,14 +15,7 @@ class AppMaterial extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = View.of(context).platformDispatcher.platformBrightness;
 
-    TextTheme textTheme = createTextTheme(
-      context,
-      'Open Sans',
-      'Montserrat',
-      // 'Quando',
-      // "Happy Monkey",
-      //"Marcellus SC", //
-    );
+    TextTheme textTheme = createTextTheme(context, 'Open Sans', 'Montserrat');
 
     MaterialTheme theme = MaterialTheme(textTheme);
 
