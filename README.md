@@ -4,6 +4,45 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/03/24 - version: 0.5.03+05
+
+Introduced several refinements across the codebase, focusing on enhancing result handling, UI feedback, and internal structure consistency.
+
+### Changes made:
+
+1. **lib/data/repositories/todos/todos_repository_remote.dart**:
+   - Replaced deprecated `onSuccess` and `onFailure` with `onOk` and `onError` in all result fold statements for consistency with the updated `Result` interface.
+
+2. **lib/ui/todo/components/list_tile_todo.dart**:
+   - Changed the `elevation` of the `Card` widget from `0` to `1` for visual enhancement.
+   - Replaced `IconButton` for toggling `todo.done` status with a `Checkbox`, improving clarity and accessibility.
+
+3. **lib/ui/todo/todo_screen.dart**:
+   - Updated the AppBar title from `'Todo'` to `'Todos'` for proper pluralization.
+
+4. **lib/ui/todo_details/todo_details_view_model.dart**:
+   - Refactored `fold` method calls to use `onOk` and `onError` callbacks instead of `onSuccess` and `onFailure`.
+
+5. **lib/utils/result/result.dart**:
+   - Replaced the entire `Result` implementation with a cleaner, more structured version using sealed classes and improved documentation.
+   - Removed legacy `ResultExtension`s and old `fold` implementation.
+   - Added documentation and clarified usage through DartDoc comments.
+   - Updated `isOk` and `isError` getters to replace `isSuccess` and `isFailure`.
+   - Introduced a standard `fold` method inside the `Result` class.
+
+6. **test/data/services/api/api_client_test.dart**:
+   - Removed use of deprecated `.ok()` extension method in favor of direct result handling.
+   - Replaced `isSuccess` check with `isOk` in result assertions to align with new `Result` semantics.
+
+7. **test/utils/result/result_test.dart**:
+   - Updated tests to reflect the removal of the `.ok()` and `.error()` extension methods.
+   - Replaced them with `Result.ok(...)` and `Result.error(...)` constructors respectively.
+
+### Conclusion:
+
+These changes unify the usage of the `Result` class across the codebase by modernizing its API, improving naming consistency, enhancing UI feedback, and updating related unit tests accordingly.
+
+
 ## 2025/03/24 - version: 0.5.02+04
 
 This update introduces a complete theming system with dynamic light and dark modes, along with minor structural and visual improvements throughout the app.

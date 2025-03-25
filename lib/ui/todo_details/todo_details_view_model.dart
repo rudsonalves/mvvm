@@ -22,10 +22,10 @@ class TodoDetailsViewModel extends ChangeNotifier {
     final result = await _todoRepository.get(id);
 
     result.fold(
-      onSuccess: (todo) {
+      onOk: (todo) {
         _todo = todo;
       },
-      onFailure: (error) {},
+      onError: (error) {},
     );
 
     notifyListeners();
@@ -36,10 +36,10 @@ class TodoDetailsViewModel extends ChangeNotifier {
     final result = await _todoRepository.update(todo);
 
     result.fold(
-      onSuccess: (todo) {
+      onOk: (todo) {
         _todo = todo;
       },
-      onFailure: (erro) {},
+      onError: (erro) {},
     );
 
     notifyListeners();

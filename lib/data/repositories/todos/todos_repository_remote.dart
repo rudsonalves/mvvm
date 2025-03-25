@@ -24,14 +24,14 @@ class TodosRepositoryRemote implements TodosRepository {
     final result = await _apiClient.postTodo(todo);
 
     result.fold(
-      onSuccess: (todo) {
+      onOk: (todo) {
         final newTodo = result.asOk.value;
         if (newTodo.id == null) {
           return Result.error(Exception('Todo id return null'));
         }
         _todosMap[newTodo.id!] = newTodo;
       },
-      onFailure: (err) {
+      onError: (err) {
         log('Have a error: $err');
       },
     );
@@ -44,10 +44,10 @@ class TodosRepositoryRemote implements TodosRepository {
     final result = await _apiClient.deleteTodo(todo);
 
     result.fold(
-      onSuccess: (_) {
+      onOk: (_) {
         _todosMap.remove(todo.id);
       },
-      onFailure: (err) {
+      onError: (err) {
         log('Have a error: $err');
       },
     );
@@ -61,11 +61,11 @@ class TodosRepositoryRemote implements TodosRepository {
       final result = await _apiClient.getTodos();
 
       result.fold(
-        onSuccess: (todos) {
+        onOk: (todos) {
           _todosMap.clear();
           _todosMap.addEntries(todos.map((todo) => MapEntry(todo.id!, todo)));
         },
-        onFailure: (err) {
+        onError: (err) {
           log('Have a error: $err');
         },
       );
@@ -83,10 +83,10 @@ class TodosRepositoryRemote implements TodosRepository {
       final result = await _apiClient.getTodoById(id);
 
       result.fold(
-        onSuccess: (todo) {
+        onOk: (todo) {
           _todosMap[todo.id!] = todo;
         },
-        onFailure: (err) {
+        onError: (err) {
           log('Have a error: $err');
         },
       );
@@ -104,10 +104,10 @@ class TodosRepositoryRemote implements TodosRepository {
       final result = await _apiClient.updateTodo(todo);
 
       result.fold(
-        onSuccess: (todo) {
+        onOk: (todo) {
           _todosMap[todo.id!] = todo;
         },
-        onFailure: (err) {
+        onError: (err) {
           log('Have a error: $err');
         },
       );

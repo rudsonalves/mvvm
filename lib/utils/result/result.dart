@@ -1,64 +1,65 @@
-abstract interface class Result<T> {
+// Copyright 2025 Rudson Alves. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
+// Based in The Flutter team result:
+// https://github.com/flutter/samples/blob/main/compass_app/app/lib/utils/result.dart
+
+/// Utility class to wrap result data
+///
+/// Evaluate the result using a fold statement:
+/// ```dart
+/// result.fold(
+///   onOk: (value) {
+///     print(value);
+///   },
+///   onError: (err) {
+///     print(error)
+///   }
+/// );
+/// ```
+sealed class Result<T> {
   const Result();
 
-  factory Result.ok(T value) = Ok._;
+  /// Creates a successful [Result], completed with the specified [value].
+  const factory Result.ok(T value) = Ok<T>._;
 
-  factory Result.error(Exception error) = Error._;
+  /// Creates an error [Result], completed with the specified [error].
+  const factory Result.error(Exception error) = Error<T>._;
 
-  bool get isSuccess;
+  /// Returned true if is Ok
+  bool get isOk => this is Ok<T>;
 
-  bool get isFailure;
+  /// Returned true id is error
+  bool get isError => this is Error<T>;
 
-  // Teas Off
-  // factory Result.ok(T value) => Ok._(value);
-
-  // factory Result.error(Exception error) => Error._(error);
+  /// Pattern-matching handler for [Result].
+  R fold<R>({
+    required R Function(T value) onOk,
+    required R Function(Exception error) onError,
+  }) {
+    return switch (this) {
+      Ok<T> ok => onOk(ok.value),
+      Error<T> error => onError(error.error),
+    };
+  }
 }
 
+/// A successful [Result] wrapping a [value].
 final class Ok<T> extends Result<T> {
+  const Ok._(this.value);
   final T value;
-
-  Ok._(this.value);
-
-  @override
-  bool get isSuccess => true;
-
-  @override
-  bool get isFailure => false;
 }
 
+/// A failed [Result] wrapping an [Exception].
 final class Error<T> extends Result<T> {
+  const Error._(this.error);
   final Exception error;
-
-  Error._(this.error);
-
-  @override
-  bool get isSuccess => false;
-
-  @override
-  bool get isFailure => true;
 }
 
-extension ResultExtension on Object {
-  Result ok() => Result.ok(this);
-}
-
-extension ResultException on Exception {
-  Result error() => Result.error(this);
-}
-
+/// Cast extensions to access typed [Ok] and [Error] results.
 extension ResultCasting<T> on Result<T> {
   Ok<T> get asOk => this as Ok<T>;
 
   Error<T> get asError => this as Error<T>;
-}
-
-extension ResultFolt<T> on Result<T> {
-  R fold<R>({
-    required R Function(T value) onSuccess,
-    required R Function(Exception error) onFailure,
-  }) {
-    if (isSuccess) return onSuccess((this as Ok<T>).value);
-    return onFailure((this as Error<T>).error);
-  }
 }
