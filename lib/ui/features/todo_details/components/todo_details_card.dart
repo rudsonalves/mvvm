@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '/domain/models/todo.dart';
-import '/ui/todo_details/components/details_row.dart';
+import 'details_row.dart';
 
 class TodoDetailsCard extends StatelessWidget {
   final Todo todo;

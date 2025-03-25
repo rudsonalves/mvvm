@@ -1,13 +1,13 @@
 import 'package:go_router/go_router.dart';
-import '/data/repositories/todos/todos_repository.dart';
 
+import '/data/repositories/todos/todos_repository.dart';
 import '/data/repositories/todos/todos_repository_remote.dart';
 import '/data/services/api/api_client.dart';
 import '/routing/routes.dart';
-import '/ui/todo/todo_view_model.dart';
-import '/ui/todo/todo_screen.dart';
-import '/ui/todo_details/todo_details_screen.dart';
-import '/ui/todo_details/todo_details_view_model.dart';
+import '../ui/features/todo/todo_view_model.dart';
+import '../ui/features/todo/todo_screen.dart';
+import '../ui/features/todo_details/todo_details_screen.dart';
+import '../ui/features/todo_details/todo_details_view_model.dart';
 
 GoRouter reouterConfig() {
   final TodosRepository todoRepository = TodosRepositoryRemote(
