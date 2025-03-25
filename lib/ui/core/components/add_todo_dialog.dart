@@ -38,9 +38,7 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-        widget.todo != null ? 'Editar Tarefa' : 'Adicione nova Tarefa',
-      ),
+      title: Text(widget.todo != null ? 'Editar Tarefa' : 'Adicionar Tarefa'),
       content: Form(
         key: _formKey,
         child: Column(

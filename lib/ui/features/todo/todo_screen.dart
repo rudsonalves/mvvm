@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '/ui/core/themes/app_theme_inherited.dart';
 import '/domain/models/todo.dart';
-import '/ui/todo/todo_view_model.dart';
+import 'todo_view_model.dart';
 import '/ui/core/components/add_todo_dialog.dart';
-import '/ui/todo/components/todo_list_view.dart';
+import 'components/todo_list_view.dart';
 
 typedef OnDeleteTodo = void Function(Todo todo);
 typedef OnDoneTodo = void Function(Todo todo);
@@ -20,11 +21,19 @@ class TodoScreen extends StatefulWidget {
 class _TodoScreenState extends State<TodoScreen> {
   @override
   Widget build(BuildContext context) {
+    final AppThemeInherited appTheme = AppThemeInherited.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todos'),
         centerTitle: true,
         elevation: 5,
+        actions: [
+          IconButton(
+            onPressed: appTheme.toggleTheme,
+            icon: Icon(appTheme.isDark ? Icons.dark_mode : Icons.light_mode),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addTodo,

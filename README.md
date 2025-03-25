@@ -4,6 +4,48 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/03/24 - version: 0.5.04+08
+
+This update introduces theme toggling support and performs a major UI restructuring for better scalability and modularity.
+
+### Changes made:
+
+1. **lib/main.dart**:
+   - Converted `AppMaterial` from a `StatelessWidget` to a `StatefulWidget`.
+   - Added a theme toggle mechanism via the new `AppThemeInherited` class.
+   - Wrapped `MaterialApp.router` in `AppThemeInherited` to propagate brightness and toggle function.
+
+2. **lib/ui/core/themes/app_theme_inherited.dart**:
+   - Created new inherited widget `AppThemeInherited` to manage and expose theme brightness and toggle functionality throughout the widget tree.
+
+3. **lib/ui/features/todo/todo_screen.dart**:
+   - Added a theme toggle button in the `AppBar`, using `AppThemeInherited` for context-based theming.
+
+4. **lib/ui/core/components/add_todo_dialog.dart**:
+   - Adjusted dialog title text from "Adicione nova Tarefa" to "Adicionar Tarefa" for consistency.
+
+5. **lib/routing/router.dart**:
+   - Updated paths for `todo` and `todo_details` screens and view models to reflect new feature-based directory structure.
+
+6. **lib/ui/features/todo/**:
+   - Renamed and moved files previously under `ui/todo/` to `ui/features/todo/` for improved structure.
+   - Includes `todo_screen.dart`, `todo_view_model.dart`, and related components like `list_tile_todo.dart` and `todo_list_view.dart`.
+
+7. **lib/ui/features/todo_details/**:
+   - Renamed and moved files from `ui/todo_details/` to `ui/features/todo_details/`, following the same modular approach.
+   - Includes screen, view model, and supporting components like `todo_details_card.dart` and `details_row.dart`.
+
+8. **server/db.json**:
+   - Updated `completedAt` values in sample data to reflect the current state and timestamps.
+
+9. **test/ui/todo/viewmodels/todo_viewmodel_test.dart**:
+   - Adjusted import path for `TodoViewModel` to reflect its new location under `features/todo`.
+
+### Conclusion:
+
+This refactor improves the modularization and clarity of the UI structure by grouping feature-related files. Additionally, it introduces a scalable solution for runtime theme switching via `AppThemeInherited`, enhancing the user experience and maintainability of the application.
+
+
 ## 2025/03/24 - version: 0.5.03+07
 
 This update improves error logging, refines UI components, and enhances user experience through visual and interaction improvements.

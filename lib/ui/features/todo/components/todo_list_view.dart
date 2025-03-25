@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '/domain/models/todo.dart';
-import '/ui/todo/components/list_tile_todo.dart';
-import '/ui/todo/todo_screen.dart';
+import 'list_tile_todo.dart';
+import '../todo_screen.dart';
 
 class ListViewTodos extends StatelessWidget {
   final List<Todo> todos;
