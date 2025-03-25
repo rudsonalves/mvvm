@@ -45,7 +45,7 @@ class TodosRepositoryDev implements TodosRepository {
     await Future.delayed(const Duration(milliseconds: 200));
     if (_todos.contains(todo)) {
       _todos.remove(todo);
-      return Result.ok(null);
+      return const Result.ok(null);
     }
     return Result.error(Exception('Todo not found'));
   }

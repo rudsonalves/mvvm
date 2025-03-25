@@ -1,5 +1,14 @@
 import "package:flutter/material.dart";
 
+//
+// Colors
+//  - Primary: #5B9BFF
+//  - Secondary: #8591AA
+//  - Tertiary: #C66DDF
+//  - Error: #FF5449
+//  - Neutral: #BBBBBF
+//  - Neutral Variant: #898B94
+
 class MaterialTheme {
   final TextTheme textTheme;
 

@@ -4,6 +4,71 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/03/24 - version: 0.5.03+06
+
+This commit introduces model improvements, UI enhancements, command refactoring, and better date handling across the application.
+
+### Changes made:
+
+1. **android/app/build.gradle.kts**:
+   - Replaced `flutter.ndkVersion` with a fixed value `"27.0.12077973"` for explicit NDK version control.
+
+2. **lib/data/repositories/todos/todos_repository_dev.dart**:
+   - Added `const` keyword to `Result.ok(null)` for consistency with updated result handling practices.
+
+3. **lib/data/services/api/api_client.dart**:
+   - Applied `const` to `Result.ok(null)` to align with updated return patterns.
+
+4. **lib/domain/models/todo.dart**:
+   - Introduced new fields `createdAt` and `completedAt` in the `Todo` model to track timestamps.
+   - Updated `toMap`, `fromMap`, and `copyWith` methods to support these new fields.
+
+5. **lib/ui/todo/components/add_todo_dialog.dart → lib/ui/core/components/add_todo_dialog.dart**:
+   - Moved and refactored `AddTodoDialog` to a core reusable location.
+   - Added support for editing existing todos by initializing form fields and using `todo.copyWith`.
+   - Replaced `todoView` with a generic `Command1` for better decoupling and testability.
+
+6. **lib/ui/core/themes/theme.dart**:
+   - Added comments detailing the color palette used across the UI for design consistency.
+
+7. **lib/ui/todo/components/list_tile_todo.dart**:
+   - Replaced inline `onChanged` logic with a dedicated `_toggleDone` method that also updates `completedAt`.
+   - Improved readability and data integrity when toggling a task's completion.
+
+8. **lib/ui/todo/components/todo_list_view.dart**:
+   - Renamed `onDoneTodo` to `onUpdateTodo` for clearer semantic meaning.
+
+9. **lib/ui/todo/todo_screen.dart**:
+   - Updated import path for `AddTodoDialog` due to refactoring.
+   - Updated references from `onDoneTodo` to `onUpdateTodo` for consistency with updated interface.
+
+10. **lib/ui/todo_details/components/details_row.dart**:
+    - Added a reusable `DetailsRow` widget for displaying labeled rows in the UI.
+
+11. **lib/ui/todo_details/components/todo_details_card.dart**:
+    - Introduced a new `TodoDetailsCard` widget to present detailed information of a todo with edit capabilities.
+
+12. **lib/ui/todo_details/components/todo_edit.dart**:
+    - Removed deprecated `TodoEdit` widget, replaced by the more robust `TodoDetailsCard`.
+
+13. **lib/ui/todo_details/todo_details_screen.dart**:
+    - Integrated `TodoDetailsCard` into the details screen.
+    - Added `_editTodo` method to allow inline editing using the updated `AddTodoDialog`.
+
+14. **server/db.json**:
+    - Updated todos dataset to include `createdAt` and `completedAt` fields for sample records, enabling testing with realistic data.
+
+15. **test/utils/commands/commands_test.dart**:
+    - Applied `const` to `Result.ok` return value for consistency with the new `Result` semantics.
+
+16. **test/utils/result/result_test.dart**:
+    - Updated all test cases to use `const Result.ok` for accurate and consistent result instantiation.
+
+### Conclusion:
+
+These changes significantly enhance the maintainability, scalability, and user experience of the application by introducing timestamp tracking, modular UI components, and a more expressive and testable command structure.
+
+
 ## 2025/03/24 - version: 0.5.03+05
 
 Introduced several refinements across the codebase, focusing on enhancing result handling, UI feedback, and internal structure consistency.

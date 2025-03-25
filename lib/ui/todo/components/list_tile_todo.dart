@@ -37,14 +37,7 @@ class ListTileTodo extends StatelessWidget {
         //     color: todo.done ? Colors.green : null,
         //   ),
         // ),
-        Checkbox(
-          value: todo.done,
-          onChanged: (value) {
-            if (value == null) return;
-
-            onDoneTodo(todo.copyWith(done: value));
-          },
-        ),
+        Checkbox(value: todo.done, onChanged: _toggleDone),
         title: Text(todo.name),
         subtitle:
             todo.description.trim().isNotEmpty ? Text(todo.description) : null,
@@ -53,6 +46,14 @@ class ListTileTodo extends StatelessWidget {
           icon: const Icon(Icons.delete, color: Colors.redAccent),
         ),
       ),
+    );
+  }
+
+  void _toggleDone(bool? value) {
+    if (value == null) return;
+
+    onDoneTodo(
+      todo.copyWith(done: value, completedAt: value ? DateTime.now() : null),
     );
   }
 }

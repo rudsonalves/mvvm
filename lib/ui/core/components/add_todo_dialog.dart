@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/domain/models/todo.dart';
-import 'package:mvvm/ui/todo/todo_view_model.dart';
+import 'package:mvvm/utils/commands/commands.dart';
 
 class AddTodoDialog extends StatefulWidget {
-  final TodoViewModel todoView;
+  final Todo? todo;
+  final Command1<Todo, Todo> todoAction;
 
-  const AddTodoDialog({super.key, required this.todoView});
+  const AddTodoDialog({super.key, this.todo, required this.todoAction});
 
   @override
   State<AddTodoDialog> createState() => _AddTodoDialogState();
@@ -15,6 +16,15 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
   final nameController = TextEditingController();
   final descriptionConreoller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    if (widget.todo != null) {
+      nameController.text = widget.todo!.name;
+      descriptionConreoller.text = widget.todo!.description;
+    }
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -27,7 +37,9 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Adicione nova Tarefa'),
+      title: Text(
+        widget.todo != null ? 'Editar Tarefa' : 'Adicione nova Tarefa',
+      ),
       content: Form(
         key: _formKey,
         child: Column(
@@ -45,7 +57,7 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
                 textCapitalization: TextCapitalization.words,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Preencha o campo Tarefa';
+                    return 'Preencha um título para a Tarefa';
                   }
                   return null;
                 },
@@ -63,7 +75,7 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
                 textCapitalization: TextCapitalization.sentences,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Preencha o campo Tarefa';
+                    return 'Adicione uma descrição';
                   }
                   return null;
                 },
@@ -82,9 +94,9 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
           onPressed: _addTodo,
           label: const Text('Salvar'),
           icon: ListenableBuilder(
-            listenable: widget.todoView.addTodo,
+            listenable: widget.todoAction,
             builder: (context, _) {
-              if (!widget.todoView.addTodo.running) {
+              if (!widget.todoAction.running) {
                 return const Icon(Icons.add);
               }
               return const SizedBox(
@@ -103,19 +115,24 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
   }
 
   Future<void> _addTodo() async {
-    if (widget.todoView.addTodo.running) return;
+    if (widget.todoAction.running) return;
 
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      final newTodo = Todo(
-        name: nameController.text.trim(),
-        description: descriptionConreoller.text.trim(),
-      );
+      final newTodo =
+          widget.todo?.copyWith(
+            name: nameController.text.trim(),
+            description: descriptionConreoller.text.trim(),
+          ) ??
+          Todo(
+            name: nameController.text.trim(),
+            description: descriptionConreoller.text.trim(),
+          );
 
-      await widget.todoView.addTodo.execute(newTodo);
-      if (widget.todoView.addTodo.completed) {
+      await widget.todoAction.execute(newTodo);
+      if (widget.todoAction.completed) {
         if (mounted) Navigator.pop(context);
       }
-      if (widget.todoView.addTodo.error) {
+      if (widget.todoAction.error) {
         if (mounted) {
           await showDialog(
             context: context,

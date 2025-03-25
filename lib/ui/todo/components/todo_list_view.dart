@@ -7,13 +7,13 @@ import 'package:mvvm/ui/todo/todo_screen.dart';
 class ListViewTodos extends StatelessWidget {
   final List<Todo> todos;
   final OnDeleteTodo onDeleteTodo;
-  final OnDoneTodo onDoneTodo;
+  final OnDoneTodo onUpdateTodo;
 
   const ListViewTodos({
     super.key,
     required this.todos,
     required this.onDeleteTodo,
-    required this.onDoneTodo,
+    required this.onUpdateTodo,
   });
 
   @override
@@ -28,7 +28,7 @@ class ListViewTodos extends StatelessWidget {
           (context, index) => ListTileTodo(
             todo: todos[index],
             onDeleteTodo: onDeleteTodo,
-            onDoneTodo: onDoneTodo,
+            onDoneTodo: onUpdateTodo,
           ),
     );
   }

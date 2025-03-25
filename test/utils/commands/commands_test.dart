@@ -76,7 +76,7 @@ void main() {
 
 Future<Result<String>> getOkResult() async {
   await Future.delayed(const Duration(milliseconds: 500));
-  return Result.ok('Operation has Sucesses');
+  return const Result.ok('Operation has Sucesses');
 }
 
 Future<Result<bool>> getErrorResult() async {

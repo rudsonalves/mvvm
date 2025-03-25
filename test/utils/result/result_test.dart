@@ -4,7 +4,7 @@ import 'package:mvvm/utils/result/result.dart';
 void main() {
   group('Should test Ok Result', () {
     test('Shoult create a Ok Result', () {
-      final result = Result.ok('Ok');
+      final result = const Result.ok('Ok');
 
       expect(result.asOk.value, 'Ok');
     });
@@ -16,7 +16,7 @@ void main() {
     });
 
     test('Shoult create a Ok Result with Extension', () {
-      final result = Result.ok('Ok');
+      final result = const Result.ok('Ok');
 
       expect(result.asOk.value, 'Ok');
     });

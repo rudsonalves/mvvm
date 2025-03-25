@@ -124,7 +124,7 @@ class ApiClient {
       );
       final response = await request.close();
       if (response.statusCode == HttpStatus.ok) {
-        return Result.ok(null);
+        return const Result.ok(null);
       } else {
         throw Exception(
           HttpException('Invalid response: ${response.statusCode}'),
