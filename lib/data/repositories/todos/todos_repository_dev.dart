@@ -1,6 +1,6 @@
-import 'package:mvvm/utils/result/result.dart';
-import 'package:mvvm/data/repositories/todos/todos_repository.dart';
-import 'package:mvvm/domain/models/todo.dart';
+import '/utils/result/result.dart';
+import '/data/repositories/todos/todos_repository.dart';
+import '/domain/models/todo.dart';
 
 class TodosRepositoryDev implements TodosRepository {
   final List<Todo> _todos = [];

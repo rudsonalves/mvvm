@@ -1,5 +1,5 @@
-import 'package:mvvm/utils/result/result.dart';
-import 'package:mvvm/domain/models/todo.dart';
+import '/utils/result/result.dart';
+import '/domain/models/todo.dart';
 
 abstract interface class TodosRepository {
   Map<String, Todo> get todosMap;

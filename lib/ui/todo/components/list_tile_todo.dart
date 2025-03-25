@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mvvm/domain/models/todo.dart';
-import 'package:mvvm/routing/routes.dart';
-import 'package:mvvm/ui/todo/todo_screen.dart';
+import '/domain/models/todo.dart';
+import '/routing/routes.dart';
+import '/ui/todo/todo_screen.dart';
 
 class ListTileTodo extends StatelessWidget {
   final Todo todo;

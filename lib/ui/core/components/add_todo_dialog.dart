@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/domain/models/todo.dart';
-import 'package:mvvm/utils/commands/commands.dart';
+
+import '/domain/models/todo.dart';
+import '/utils/commands/commands.dart';
 
 class AddTodoDialog extends StatefulWidget {
   final Todo? todo;

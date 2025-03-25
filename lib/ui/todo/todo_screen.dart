@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:mvvm/domain/models/todo.dart';
-import 'package:mvvm/ui/todo/todo_view_model.dart';
-import 'package:mvvm/ui/core/components/add_todo_dialog.dart';
-import 'package:mvvm/ui/todo/components/todo_list_view.dart';
+import '/domain/models/todo.dart';
+import '/ui/todo/todo_view_model.dart';
+import '/ui/core/components/add_todo_dialog.dart';
+import '/ui/todo/components/todo_list_view.dart';
 
 typedef OnDeleteTodo = void Function(Todo todo);
 typedef OnDoneTodo = void Function(Todo todo);
