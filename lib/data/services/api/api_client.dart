@@ -37,10 +37,10 @@ class ApiClient {
         );
       }
     } on Exception catch (err) {
-      log(err.toString());
+      log('getTodos: $err');
       return Result.error(err);
     } catch (err) {
-      log(err.toString());
+      log('getTodos: $err');
       return Result.error(Exception(err));
     } finally {
       client.close();

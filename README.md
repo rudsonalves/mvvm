@@ -4,6 +4,34 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/03/24 - version: 0.5.03+07
+
+This update improves error logging, refines UI components, and enhances user experience through visual and interaction improvements.
+
+### Changes made:
+
+1. **lib/data/services/api/api_client.dart**:
+   - Updated error logs in `getTodos` method to include method context (`'getTodos: $err'`) for clearer debugging.
+
+2. **lib/main.dart**:
+   - Simplified `TextTheme` initialization by removing commented-out font options and streamlining the method call.
+
+3. **lib/ui/todo_details/components/todo_details_card.dart**:
+   - Replaced `Card` with `InkWell` wrapping a `Card` to make the entire card tappable, enhancing UX.
+   - Removed the `IconButton` for editing in favor of a consistent tappable surface.
+   - Preserved visual structure while improving interaction design.
+
+4. **lib/ui/todo_details/todo_details_screen.dart**:
+   - Enhanced the AppBar by centering the title and setting elevation to `5` for better visual hierarchy.
+
+5. **server/db.json**:
+   - Updated the `done` field of a sample todo to `true` and adjusted the corresponding `completedAt` timestamp to reflect the completion state accurately.
+
+### Conclusion:
+
+These refinements contribute to improved maintainability and a more intuitive user interface, with clearer logging and enhanced interactivity on the details screen.
+
+
 ## 2025/03/24 - version: 0.5.03+06
 
 This commit introduces model improvements, UI enhancements, command refactoring, and better date handling across the application.
