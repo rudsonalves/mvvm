@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Todo {
-  final String? id;
+  final String id;
   final String name;
   final String description;
   final DateTime createdAt;
@@ -9,7 +9,7 @@ class Todo {
   final bool done;
 
   Todo({
-    this.id,
+    required this.id,
     required this.name,
     required this.description,
     DateTime? createdAt,
@@ -20,7 +20,7 @@ class Todo {
   Map<String, dynamic> toMap() {
     final map = <String, dynamic>{};
 
-    id != null ? map.addAll({'id': id}) : null;
+    map.addAll({'id': id});
     map.addAll({'name': name});
     map.addAll({'description': description});
     map.addAll({'createdAt': createdAt.millisecondsSinceEpoch});
@@ -32,7 +32,7 @@ class Todo {
 
   factory Todo.fromMap(Map<String, dynamic> map) {
     return Todo(
-      id: map['id'] as String?,
+      id: map['id'] as String,
       name: map['name'] as String,
       description: map['description'] as String,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),

@@ -18,7 +18,7 @@ void main() {
     });
 
     test('Should return a Todo when creating postTodo()', () async {
-      final Todo todo = Todo(name: 'Mais um Todo', description: '');
+      final Todo todo = Todo(id: '1234', name: 'Mais um Todo', description: '');
 
       final result = await apiClient.postTodo(todo);
       expect(result.asOk.value, isA<Todo>());
@@ -29,7 +29,7 @@ void main() {
       expect(result.asOk.value, isNotEmpty);
       final todos = result.asOk.value;
 
-      final todo = Todo(name: 'Mais um novo Todo', description: '');
+      final todo = Todo(id: '1234', name: 'Mais um novo Todo', description: '');
       final resultPost = await apiClient.postTodo(todo);
       final newTodo = resultPost.asOk.value;
       expect(newTodo.id, isNotNull);
@@ -43,6 +43,7 @@ void main() {
 
     test('Should return a Todo when update updateTodo()', () async {
       final Todo todo = Todo(
+        id: '1234',
         name: 'Este Todo deve ser atualizado',
         description: '',
       );
@@ -60,18 +61,18 @@ void main() {
     });
 
     test('Should return a Todo of a know id', () async {
-      final todo = Todo(name: 'Conheça a id', description: '');
+      final todo = Todo(id: '1234', name: 'Conheça a id', description: '');
 
       final result = await apiClient.postTodo(todo);
       expect(result.asOk.value, isA<Todo>());
 
       final newTodo = result.asOk.value;
-      final getResult = await apiClient.getTodoById(newTodo.id!);
+      final getResult = await apiClient.getTodoById(newTodo.id);
       expect(getResult.isOk, true);
 
       final getTodo = getResult.asOk.value;
       expect(getTodo.id, isNotNull);
-      expect(getTodo.id, equals(newTodo.id!));
+      expect(getTodo.id, equals(newTodo.id));
       expect(getTodo.name, equals(newTodo.name));
     });
   });

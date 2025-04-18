@@ -8,15 +8,18 @@ import '/utils/result/result.dart';
 
 class TodoDetailsViewModel extends ChangeNotifier {
   final TodosRepository _todoRepository;
-  final TodoUpdateUserCase _todoUpdateUserCase;
+  final TodoUserCase _todoUpdateUserCase;
 
   TodoDetailsViewModel({
     required TodosRepository todoRepository,
-    required TodoUpdateUserCase todoUpdateUserCase,
+    required TodoUserCase todoUpdateUserCase,
   }) : _todoRepository = todoRepository,
        _todoUpdateUserCase = todoUpdateUserCase {
     load = Command1<Todo, String>(_loadTodo);
     upgrade = Command1<Todo, Todo>(_todoUpdateUserCase.upgradeTodo);
+    _todoRepository.addListener(() {
+      load.execute(_todo.id);
+    });
   }
 
   late Command1<Todo, String> load;

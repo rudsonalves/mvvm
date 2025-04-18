@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/domain/models/create_todo.dart';
 import 'package:mvvm/domain/user_cases/todo_update_user_case.dart';
 
 import '/utils/commands/commands.dart';
@@ -8,21 +9,24 @@ import '/domain/models/todo.dart';
 
 class TodoViewModel extends ChangeNotifier {
   final TodosRepository _todosRepository;
-  final TodoUpdateUserCase _todoUpdateUserCase;
+  final TodoUserCase _todoUpdateUserCase;
 
   TodoViewModel({
     required TodosRepository todosRepository,
-    required TodoUpdateUserCase todoUpdateUserCase,
+    required TodoUserCase todoUpdateUserCase,
   }) : _todosRepository = todosRepository,
        _todoUpdateUserCase = todoUpdateUserCase {
     load = Command0(_load)..execute();
-    addTodo = Command1<Todo, Todo>(_addTodo);
+    addTodo = Command1<Todo, CreateTodo>(_addTodo);
     deleteTodo = Command1<void, Todo>(_deleteTodo);
     updateTodo = Command1<Todo, Todo>(_todoUpdateUserCase.upgradeTodo);
+    _todosRepository.addListener(() {
+      load.execute();
+    });
   }
 
   late Command0 load;
-  late Command1<Todo, Todo> addTodo;
+  late Command1<Todo, CreateTodo> addTodo;
   late Command1<void, Todo> deleteTodo;
   late Command1<Todo, Todo> updateTodo;
 
@@ -36,7 +40,7 @@ class TodoViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<Result<Todo>> _addTodo(Todo todo) async {
+  Future<Result<Todo>> _addTodo(CreateTodo todo) async {
     final result = await _todosRepository.add(todo);
     notifyListeners();
     return result;

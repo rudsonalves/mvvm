@@ -1,8 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:mvvm/domain/models/create_todo.dart';
+import 'package:uuid/uuid.dart';
+
 import '/utils/result/result.dart';
 import '/data/repositories/todos/todos_repository.dart';
 import '/domain/models/todo.dart';
 
-class TodosRepositoryDev implements TodosRepository {
+class TodosRepositoryDev extends ChangeNotifier implements TodosRepository {
   final List<Todo> _todos = [];
 
   @override
@@ -17,6 +21,8 @@ class TodosRepositoryDev implements TodosRepository {
   @override
   List<Todo> get todos => _todos;
 
+  final _uuid = const Uuid();
+
   @override
   Future<Result<Todo>> get(String id) async {
     await Future.delayed(const Duration(milliseconds: 200));
@@ -29,15 +35,19 @@ class TodosRepositoryDev implements TodosRepository {
   }
 
   @override
-  Future<Result<Todo>> add(Todo todo) async {
-    final lastTodoIndex = _todos.length.toString();
+  Future<Result<Todo>> add(CreateTodo newTodo) async {
+    final id = _uuid.v4();
+    final todo = Todo(
+      id: id,
+      name: newTodo.name,
+      description: newTodo.description,
+    );
+
     await Future.delayed(const Duration(milliseconds: 200));
 
-    final newTodo = todo.copyWith(id: lastTodoIndex);
+    _todos.add(todo);
 
-    _todos.add(newTodo);
-
-    return Result.ok(newTodo);
+    return Result.ok(todo);
   }
 
   @override
@@ -53,7 +63,7 @@ class TodosRepositoryDev implements TodosRepository {
   @override
   Future<Result<Todo>> update(Todo todo) async {
     await Future.delayed(const Duration(milliseconds: 200));
-    final index = _todos.indexWhere((t) => t.id! == todo.id!);
+    final index = _todos.indexWhere((t) => t.id == todo.id);
     if (index != -1) {
       _todos[index] = todo;
       return Result.ok(todo);

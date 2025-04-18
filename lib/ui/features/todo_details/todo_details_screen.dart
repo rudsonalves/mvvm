@@ -57,7 +57,7 @@ class _TodoDetailsScreenState extends State<TodoDetailsScreen> {
       builder:
           (context) => EditTodoDialog(
             todo: widget.todoDetailsViewModel.todo,
-            command: widget.todoDetailsViewModel.upgrade,
+            update: widget.todoDetailsViewModel.upgrade,
           ),
     );
   }

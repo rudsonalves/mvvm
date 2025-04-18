@@ -1,18 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository_dev.dart';
-import 'package:mvvm/domain/models/todo.dart';
+import 'package:mvvm/domain/models/create_todo.dart';
 import 'package:mvvm/domain/user_cases/todo_update_user_case.dart';
 import 'package:mvvm/ui/features/todo/todo_view_model.dart';
 
 void main() {
   late TodoViewModel todoViewModel;
   late TodosRepository todosRepository;
-  late TodoUpdateUserCase todoUpdateUserCase;
+  late TodoUserCase todoUpdateUserCase;
 
   setUp(() {
     todosRepository = TodosRepositoryDev();
-    todoUpdateUserCase = TodoUpdateUserCase(todosRepository: todosRepository);
+    todoUpdateUserCase = TodoUserCase(todosRepository: todosRepository);
 
     todoViewModel = TodoViewModel(
       todoUpdateUserCase: todoUpdateUserCase,
@@ -39,10 +39,10 @@ void main() {
 
     test('Should remove Todo', () async {
       await todoViewModel.addTodo.execute(
-        Todo(name: 'Novo Todo', description: ''),
+        CreateTodo(name: 'Novo Todo', description: ''),
       );
       await todoViewModel.addTodo.execute(
-        Todo(name: 'Novo Todo2', description: ''),
+        CreateTodo(name: 'Novo Todo2', description: ''),
       );
 
       final todo = todoViewModel.todos[0];

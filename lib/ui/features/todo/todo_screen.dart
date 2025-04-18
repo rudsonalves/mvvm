@@ -70,8 +70,7 @@ class _TodoScreenState extends State<TodoScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder:
-          (context) => EditTodoDialog(command: widget.todoViewModel.addTodo),
+      builder: (context) => EditTodoDialog(add: widget.todoViewModel.addTodo),
     );
   }
 

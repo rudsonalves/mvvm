@@ -15,9 +15,7 @@ GoRouter reouterConfig() {
     apiClient: ApiClient(host: '192.168.0.22'),
   );
 
-  final todoUpdateUserCase = TodoUpdateUserCase(
-    todosRepository: todoRepository,
-  );
+  final todoUpdateUserCase = TodoUserCase(todosRepository: todoRepository);
 
   return GoRouter(
     initialLocation: Routes.todos,

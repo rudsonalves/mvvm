@@ -4,6 +4,85 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/04/17 - version: 0.5.04+12
+
+### Add `CreateTodo` model and refactor repository and command structure
+
+This commit introduces a new `CreateTodo` model to clearly differentiate between data used for creating a `Todo` and a fully initialized `Todo` entity. It also includes a complete refactor of `TodosRepository`, `TodoViewModel`, and UI logic to support this structure, ensuring better separation of concerns and improved readability.
+
+### Modified Files
+
+**lib/data/repositories/todos/todos_repository.dart**
+- Modified the interface to extend `ChangeNotifier`.
+- Changed the `add` method signature to accept a `CreateTodo`.
+
+**lib/data/repositories/todos/todos_repository_dev.dart**
+- Implemented `add(CreateTodo)` with UUID generation.
+- Refactored the class to notify listeners and ensure data is added consistently.
+
+**lib/data/repositories/todos/todos_repository_remote.dart**
+- Same structural changes as `todos_repository_dev.dart`.
+- Ensured all `Todo` instances have non-null IDs.
+- Added `notifyListeners()` to update listeners on changes.
+
+**lib/domain/models/todo.dart**
+- Made `id` a required field.
+- Removed nullability from all logic depending on `id`.
+
+**lib/domain/user_cases/todo_update_user_case.dart**
+- Renamed to `TodoUserCase`.
+- Added `addTodo(CreateTodo)` method with logging and result handling.
+
+**lib/routing/router.dart**
+- Replaced `TodoUpdateUserCase` with `TodoUserCase`.
+
+**lib/ui/core/widgets/edit_todo_dialog.dart**
+- Split command logic for `update` and `add`.
+- Adjusted UI and control logic to reflect current command.
+- Included loading indicators and error dialogs specific to each command.
+
+**lib/ui/features/todo/todo_screen.dart**
+- Updated dialog call to use `add` instead of generic `command`.
+
+**lib/ui/features/todo/todo_view_model.dart**
+- Updated to use `TodoUserCase`.
+- Changed internal logic to manage `CreateTodo` properly.
+- Ensured that repository changes trigger view model reload.
+
+**lib/ui/features/todo/widgets/list_tile_todo.dart**
+- Removed null check on `todo.id`, which is now guaranteed to be non-null.
+
+**lib/ui/features/todo_details/todo_details_screen.dart**
+- Adjusted `EditTodoDialog` to pass `update` command.
+
+**lib/ui/features/todo_details/todo_details_view_model.dart**
+- Migrated to `TodoUserCase` and registered repository listener.
+
+**test/data/services/api/api_client_test.dart**
+- Adjusted test cases to provide `id` when creating a `Todo`.
+
+**test/ui/todo/viewmodels/todo_viewmodel_test.dart**
+- Updated to use `CreateTodo` instead of `Todo` for the creation process.
+
+**pubspec.yaml**
+- Added direct dependency: `uuid`.
+
+**pubspec.lock**
+- Resolved new dependencies: `uuid`, `fixnum`, `sprintf`.
+
+**server/db.json**
+- Updated `completedAt` timestamps and task description to reflect recent test data.
+
+### New Files
+
+**lib/domain/models/create_todo.dart**
+- Introduced new model `CreateTodo`, containing only name and description, to cleanly separate input data from persisted entities.
+
+### Conclusion
+
+The refactoring introduces a clear distinction between creating and updating `Todo` entities, improves command handling, and ensures better data consistency. The system compiles successfully and all features remain functional.
+
+
 ## 2025/04/17 - version: 0.5.04+11
 
 ### Integrate Use Case Layer and Refactor Todo ViewModel & Dialog Logic

@@ -26,7 +26,7 @@ class ListTileTodo extends StatelessWidget {
       elevation: 1,
       child: ListTile(
         onTap: () {
-          context.push(Routes.todoDetails(todo.id!));
+          context.push(Routes.todoDetails(todo.id));
         },
         leading:
         // IconButton(
