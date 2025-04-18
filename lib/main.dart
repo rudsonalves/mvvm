@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/config/dependences.dart';
 import 'package:mvvm/ui/core/themes/app_theme_inherited.dart';
+import 'package:provider/provider.dart';
 
 import '/routing/router.dart';
 import '/ui/core/themes/text_theme.dart';
 import '/ui/core/themes/theme.dart';
 
 void main() {
-  runApp(const AppMaterial());
+  runApp(MultiProvider(providers: remoteProviders, child: const AppMaterial()));
 }
 
 class AppMaterial extends StatefulWidget {

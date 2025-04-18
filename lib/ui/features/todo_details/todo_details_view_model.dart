@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/domain/user_cases/todo_update_user_case.dart';
+import 'package:mvvm/domain/user_cases/todo_user_case.dart';
 
 import '/data/repositories/todos/todos_repository.dart';
 import '/domain/models/todo.dart';
@@ -12,9 +12,9 @@ class TodoDetailsViewModel extends ChangeNotifier {
 
   TodoDetailsViewModel({
     required TodosRepository todoRepository,
-    required TodoUserCase todoUpdateUserCase,
+    required TodoUserCase todoUserCase,
   }) : _todoRepository = todoRepository,
-       _todoUpdateUserCase = todoUpdateUserCase {
+       _todoUpdateUserCase = todoUserCase {
     load = Command1<Todo, String>(_loadTodo);
     upgrade = Command1<Todo, Todo>(_todoUpdateUserCase.upgradeTodo);
     _todoRepository.addListener(() {

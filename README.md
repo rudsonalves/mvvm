@@ -4,6 +4,59 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/04/17 - version: 0.6.00+13
+
+### Integrate `Provider` for Dependency Injection and Centralize App Configuration
+
+This commit introduces a new centralized dependency injection system using `Provider`, replacing manual instantiation of use cases and repositories across the application. It improves modularity, reusability, and testability by defining all providers in a dedicated configuration file.
+
+### Modified Files
+
+**lib/main.dart**
+- Wrapped the root widget with `MultiProvider` using `remoteProviders`.
+
+**lib/config/dependences.dart**
+- Created a new file defining all providers including `ApiClient`, `TodosRepositoryRemote`, and `TodoUserCase`.
+
+**lib/routing/router.dart**
+- Removed manual instantiations of `TodosRepository` and `TodoUserCase`.
+- Updated routes to retrieve dependencies via `context.read()`.
+
+**lib/ui/features/todo/todo_view_model.dart**
+- Updated to receive `todoUserCase` instead of `todoUpdateUserCase`.
+- Adjusted constructor naming for consistency with the new class name.
+
+**lib/ui/features/todo_details/todo_details_view_model.dart**
+- Renamed parameter from `todoUpdateUserCase` to `todoUserCase`.
+- Ensured repository updates trigger UI reload using `load.execute`.
+
+**pubspec.yaml**
+- Added `provider` as a main dependency.
+- Declared `logging` as a direct dependency.
+
+**pubspec.lock**
+- Registered new versions of `provider`, `nested`, and `logging` as active dependencies.
+
+**server/db.json**
+- Minor update to sample data: corrected casing and updated timestamp.
+
+**test/ui/todo/viewmodels/todo_viewmodel_test.dart**
+- Updated import to reflect the renamed `todo_user_case.dart` file.
+- Adjusted view model initialization to use new parameter name.
+
+**lib/domain/user_cases/todo_update_user_case.dart → lib/domain/user_cases/todo_user_case.dart**
+- Renamed file to match class name `TodoUserCase`.
+
+### New Files
+
+**lib/config/dependences.dart**
+- Defines `remoteProviders` and `_sharedProviders` for clean and modular dependency injection across the application.
+
+### Conclusion
+
+The application is now fully integrated with the `Provider` package, enabling cleaner and more scalable dependency management. All services and use cases are now injected via context, and the system remains fully functional.
+
+
 ## 2025/04/17 - version: 0.5.04+12
 
 ### Add `CreateTodo` model and refactor repository and command structure

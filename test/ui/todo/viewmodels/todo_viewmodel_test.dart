@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository_dev.dart';
 import 'package:mvvm/domain/models/create_todo.dart';
-import 'package:mvvm/domain/user_cases/todo_update_user_case.dart';
+import 'package:mvvm/domain/user_cases/todo_user_case.dart';
 import 'package:mvvm/ui/features/todo/todo_view_model.dart';
 
 void main() {
@@ -15,7 +15,7 @@ void main() {
     todoUpdateUserCase = TodoUserCase(todosRepository: todosRepository);
 
     todoViewModel = TodoViewModel(
-      todoUpdateUserCase: todoUpdateUserCase,
+      todoUserCase: todoUpdateUserCase,
       todosRepository: todosRepository,
     );
   });

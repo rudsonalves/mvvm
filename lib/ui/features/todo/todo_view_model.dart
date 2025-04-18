@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/domain/models/create_todo.dart';
-import 'package:mvvm/domain/user_cases/todo_update_user_case.dart';
+import 'package:mvvm/domain/user_cases/todo_user_case.dart';
 
 import '/utils/commands/commands.dart';
 import '/utils/result/result.dart';
@@ -13,9 +13,9 @@ class TodoViewModel extends ChangeNotifier {
 
   TodoViewModel({
     required TodosRepository todosRepository,
-    required TodoUserCase todoUpdateUserCase,
+    required TodoUserCase todoUserCase,
   }) : _todosRepository = todosRepository,
-       _todoUpdateUserCase = todoUpdateUserCase {
+       _todoUpdateUserCase = todoUserCase {
     load = Command0(_load)..execute();
     addTodo = Command1<Todo, CreateTodo>(_addTodo);
     deleteTodo = Command1<void, Todo>(_deleteTodo);
