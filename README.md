@@ -4,6 +4,36 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/04/17 - version: 0.5.04+09
+
+### Refactor Todo Dialog and Details Components for Improved Clarity
+
+This commit improves the organization and semantics of the UI code by renaming and relocating core components. The `AddTodoDialog` was renamed to `EditTodoDialog` to better reflect its dual purpose (adding and editing todos), and several files under `components/` were moved to `widgets/` for consistency across the UI structure.
+
+### Modified Files
+
+- **`lib/ui/core/components/add_todo_dialog.dart` → `lib/ui/core/widgets/edit_todo_dialog.dart`**
+  - Renamed the class from `AddTodoDialog` to `EditTodoDialog`.
+  - Updated constructor and state class names accordingly.
+
+- **`lib/ui/features/todo/todo_screen.dart`**
+  - Updated import path and widget usage to reflect the new `EditTodoDialog` name and location.
+
+- **`lib/ui/features/todo_details/todo_details_screen.dart`**
+  - Updated import path for `EditTodoDialog` and `TodoDetailsCard` after renaming and relocation.
+  - Adjusted dialog instantiation to use `EditTodoDialog`.
+
+- **`lib/ui/features/todo_details/components/details_row.dart` → `lib/ui/features/todo_details/widgets/details_row.dart`**
+  - Relocated without code changes to maintain naming and directory consistency.
+
+- **`lib/ui/features/todo_details/components/todo_details_card.dart` → `lib/ui/features/todo_details/widgets/todo_details_card.dart`**
+  - Relocated without code changes to follow consistent directory structure.
+
+### Conclusion
+
+These refinements align the file and class naming conventions with their responsibilities and improve the overall maintainability of the codebase. All dialogs and widgets now reside in appropriately named directories with clearer purposes.
+
+
 ## 2025/03/24 - version: 0.5.04+08
 
 This update introduces theme toggling support and performs a major UI restructuring for better scalability and modularity.

@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import '/domain/models/todo.dart';
 import '/utils/commands/commands.dart';
 
-class AddTodoDialog extends StatefulWidget {
+class EditTodoDialog extends StatefulWidget {
   final Todo? todo;
   final Command1<Todo, Todo> todoAction;
 
-  const AddTodoDialog({super.key, this.todo, required this.todoAction});
+  const EditTodoDialog({super.key, this.todo, required this.todoAction});
 
   @override
-  State<AddTodoDialog> createState() => _AddTodoDialogState();
+  State<EditTodoDialog> createState() => _EditTodoDialogState();
 }
 
-class _AddTodoDialogState extends State<AddTodoDialog> {
+class _EditTodoDialogState extends State<EditTodoDialog> {
   final nameController = TextEditingController();
   final descriptionConreoller = TextEditingController();
   final _formKey = GlobalKey<FormState>();

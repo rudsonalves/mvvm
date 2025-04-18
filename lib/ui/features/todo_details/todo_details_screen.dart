@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '/ui/core/components/add_todo_dialog.dart';
-import 'components/todo_details_card.dart';
+import '../../core/widgets/edit_todo_dialog.dart';
+import 'widgets/todo_details_card.dart';
 import 'todo_details_view_model.dart';
 
 class TodoDetailsScreen extends StatefulWidget {
@@ -55,7 +55,7 @@ class _TodoDetailsScreenState extends State<TodoDetailsScreen> {
       context: context,
       barrierDismissible: false,
       builder:
-          (context) => AddTodoDialog(
+          (context) => EditTodoDialog(
             todo: widget.todoDetailsViewModel.todo,
             todoAction: widget.todoDetailsViewModel.upgrade,
           ),
