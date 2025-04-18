@@ -2,14 +2,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository_dev.dart';
 import 'package:mvvm/domain/models/todo.dart';
+import 'package:mvvm/domain/user_cases/todo_update_user_case.dart';
 import 'package:mvvm/ui/features/todo/todo_view_model.dart';
 
 void main() {
   late TodoViewModel todoViewModel;
   late TodosRepository todosRepository;
+  late TodoUpdateUserCase todoUpdateUserCase;
+
   setUp(() {
     todosRepository = TodosRepositoryDev();
-    todoViewModel = TodoViewModel(todosRepository: todosRepository);
+    todoUpdateUserCase = TodoUpdateUserCase(todosRepository: todosRepository);
+
+    todoViewModel = TodoViewModel(
+      todoUpdateUserCase: todoUpdateUserCase,
+      todosRepository: todosRepository,
+    );
   });
 
   group('Should test TodoViewModel', () {

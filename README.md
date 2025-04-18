@@ -4,6 +4,62 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/04/17 - version: 0.5.04+11
+
+### Integrate Use Case Layer and Refactor Todo ViewModel & Dialog Logic
+
+This commit introduces the `TodoUpdateUserCase` as an intermediary between the UI and the data layer, encapsulating the update logic for `Todo`. It refactors the `TodoViewModel`, `TodoDetailsViewModel`, and `EditTodoDialog` to use this new use case, improving separation of concerns. Additionally, component paths under the `todo` feature were reorganized into `widgets/` for consistency.
+
+### Modified Files
+
+- **`lib/routing/router.dart`**
+  - Instantiated `TodoUpdateUserCase` and injected it into both `TodoViewModel` and `TodoDetailsViewModel`.
+
+- **`lib/ui/core/widgets/edit_todo_dialog.dart`**
+  - Refactored to accept `Command1<Todo, Todo>` as `command` instead of `todoAction`.
+  - Added command listener (`_onSaveTodo`) to handle success or error feedback.
+  - Improved visual feedback and user flow on dialog submission and command completion.
+
+- **`lib/ui/features/todo/todo_screen.dart`**
+  - Updated dialog usage to match the new `EditTodoDialog` API.
+  - Updated import path for `todo_list_view.dart`.
+
+- **`lib/ui/features/todo/todo_view_model.dart`**
+  - Integrated `TodoUpdateUserCase`.
+  - Removed internal `updateTodo` logic and delegated it to the use case.
+
+- **`lib/ui/features/todo_details/todo_details_screen.dart`**
+  - Updated to use the new `upgrade` command via `TodoUpdateUserCase`.
+  - Fixed widget references for consistency.
+
+- **`lib/ui/features/todo_details/todo_details_view_model.dart`**
+  - Removed internal `_upgradeTodo` method.
+  - Now uses `TodoUpdateUserCase.upgradeTodo` for the `upgrade` command.
+
+- **`lib/ui/features/todo/components/*.dart` → `lib/ui/features/todo/widgets/*.dart`**
+  - Renamed `list_tile_todo.dart` and `todo_list_view.dart` into the `widgets` folder for consistency.
+
+- **`test/ui/todo/viewmodels/todo_viewmodel_test.dart`**
+  - Injected `TodoUpdateUserCase` into `TodoViewModel` to reflect constructor change.
+
+- **`server/db.json`**
+  - Updated timestamps and description fields in mock data for consistency.
+
+### New Files
+
+- **`lib/domain/user_cases/todo_update_user_case.dart`**
+  - Introduced a new class that encapsulates the `Todo` update logic.
+  - Logs success and error scenarios and returns a `Result<Todo>`.
+
+### Assets and Test Data
+
+- **None**
+
+### Conclusion
+
+With the integration of a use case layer, this update enhances the maintainability and scalability of the application by clearly separating UI, business, and data concerns. The `EditTodoDialog` was made more reactive, and the `ViewModel`s were simplified to delegate domain logic appropriately.
+
+
 ## 2025/04/17 - version: 0.5.04+10
 
 ### Refactor `EditTodoDialog` for Code Clarity and Form Validation

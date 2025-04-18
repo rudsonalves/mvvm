@@ -4,7 +4,7 @@ import '/ui/core/themes/app_theme_inherited.dart';
 import '/domain/models/todo.dart';
 import 'todo_view_model.dart';
 import '../../core/widgets/edit_todo_dialog.dart';
-import 'components/todo_list_view.dart';
+import 'widgets/todo_list_view.dart';
 
 typedef OnDeleteTodo = void Function(Todo todo);
 typedef OnDoneTodo = void Function(Todo todo);
@@ -71,7 +71,7 @@ class _TodoScreenState extends State<TodoScreen> {
       context: context,
       barrierDismissible: false,
       builder:
-          (context) => EditTodoDialog(todoAction: widget.todoViewModel.addTodo),
+          (context) => EditTodoDialog(command: widget.todoViewModel.addTodo),
     );
   }
 

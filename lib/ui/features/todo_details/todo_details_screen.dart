@@ -38,7 +38,7 @@ class _TodoDetailsScreenState extends State<TodoDetailsScreen> {
             return child!;
           },
           child: ListenableBuilder(
-            listenable: widget.todoDetailsViewModel,
+            listenable: widget.todoDetailsViewModel.upgrade,
             builder:
                 (context, _) => TodoDetailsCard(
                   todo: widget.todoDetailsViewModel.todo,
@@ -57,7 +57,7 @@ class _TodoDetailsScreenState extends State<TodoDetailsScreen> {
       builder:
           (context) => EditTodoDialog(
             todo: widget.todoDetailsViewModel.todo,
-            todoAction: widget.todoDetailsViewModel.upgrade,
+            command: widget.todoDetailsViewModel.upgrade,
           ),
     );
   }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/utils/commands/commands.dart';
 
 import '/domain/models/todo.dart';
-import '/utils/commands/commands.dart';
 
 class EditTodoDialog extends StatefulWidget {
   final Todo? todo;
-  final Command1<Todo, Todo> todoAction;
+  final Command1<Todo, Todo> command;
 
-  const EditTodoDialog({super.key, this.todo, required this.todoAction});
+  const EditTodoDialog({super.key, this.todo, required this.command});
 
   @override
   State<EditTodoDialog> createState() => _EditTodoDialogState();
@@ -17,13 +17,18 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
   final _nameController = TextEditingController();
   final _descriptionConreoller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  late final Command1<Todo, Todo> _command;
 
   @override
   void initState() {
+    _command = widget.command;
+
     if (widget.todo != null) {
       _nameController.text = widget.todo!.name;
       _descriptionConreoller.text = widget.todo!.description;
     }
+
+    _command.addListener(_onSaveTodo);
     super.initState();
   }
 
@@ -31,6 +36,7 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
   void dispose() {
     _nameController.dispose();
     _descriptionConreoller.dispose();
+    _command.removeListener(_onSaveTodo);
 
     super.dispose();
   }
@@ -43,6 +49,7 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          spacing: 12,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 18, bottom: 12),
@@ -82,12 +89,12 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
           icon: const Icon(Icons.cancel),
         ),
         FilledButton.icon(
-          onPressed: _addTodo,
+          onPressed: _actionTodo,
           label: const Text('Salvar'),
           icon: ListenableBuilder(
-            listenable: widget.todoAction,
+            listenable: _command,
             builder: (context, _) {
-              if (!widget.todoAction.running) {
+              if (!_command.running) {
                 return const Icon(Icons.add);
               }
               return const SizedBox(
@@ -119,8 +126,8 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
     return null;
   }
 
-  Future<void> _addTodo() async {
-    if (widget.todoAction.running) return;
+  Future<void> _actionTodo() async {
+    if (_command.running) return;
 
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       final newTodo =
@@ -133,33 +140,38 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
             description: _descriptionConreoller.text.trim(),
           );
 
-      await widget.todoAction.execute(newTodo);
-      if (widget.todoAction.completed) {
-        if (mounted) Navigator.pop(context);
-      }
-      if (widget.todoAction.error) {
-        if (mounted) {
-          await showDialog(
-            context: context,
-            builder:
-                (context) => AlertDialog(
-                  title: const Text('Erro'),
-                  content: const Text(
-                    'Desculpe. Ocorreu um erro ao criar uma nova tarefa. Tente mais tarde',
-                  ),
-                  backgroundColor: Colors.red.withValues(alpha: .75),
-                  actions: [
-                    FilledButton.icon(
-                      onPressed: _cancelTodo,
-                      label: const Text('Cancelar'),
-                      icon: const Icon(Icons.cancel),
-                    ),
-                  ],
+      _command.execute(newTodo);
+    }
+  }
+
+  Future<void> _onSaveTodo() async {
+    if (_command.running) return;
+
+    if (_command.completed) {
+      if (mounted) Navigator.pop(context);
+    }
+    if (_command.error) {
+      if (mounted) {
+        await showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: const Text('Erro'),
+                content: const Text(
+                  'Desculpe. Ocorreu um erro ao criar uma nova tarefa. Tente mais tarde',
                 ),
-          );
-        }
-        if (mounted) Navigator.pop(context);
+                backgroundColor: Colors.red.withValues(alpha: .75),
+                actions: [
+                  FilledButton.icon(
+                    onPressed: _cancelTodo,
+                    label: const Text('Cancelar'),
+                    icon: const Icon(Icons.cancel),
+                  ),
+                ],
+              ),
+        );
       }
+      if (mounted) Navigator.pop(context);
     }
   }
 
