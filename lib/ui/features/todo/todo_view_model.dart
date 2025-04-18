@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:mvvm/domain/models/create_todo.dart';
 import 'package:mvvm/domain/user_cases/todo_user_case.dart';
 
@@ -34,6 +35,8 @@ class TodoViewModel extends ChangeNotifier {
 
   List<Todo> get todos => _todosRepository.todos;
 
+  final _log = Logger('TodoViewModel');
+
   Future<Result> _load() async {
     final result = await _todosRepository.getAll();
     notifyListeners();
@@ -42,18 +45,32 @@ class TodoViewModel extends ChangeNotifier {
 
   Future<Result<Todo>> _addTodo(CreateTodo todo) async {
     final result = await _todosRepository.add(todo);
+
+    result.fold(
+      onOk: (todo) {
+        _log.fine('Todo updated');
+      },
+      onError: (err) {
+        _log.warning(err.toString());
+      },
+    );
+
     notifyListeners();
     return result;
   }
 
-  // Future<Result<Todo>> _updateTodo(Todo todo) async {
-  //   final result = await _todosRepository.update(todo);
-  //   notifyListeners();
-  //   return result;
-  // }
-
   Future<Result<void>> _deleteTodo(Todo todo) async {
     final result = await _todosRepository.delete(todo);
+
+    result.fold(
+      onOk: (_) {
+        _log.fine('Todo deleted');
+      },
+      onError: (err) {
+        _log.warning(err.toString());
+      },
+    );
+
     notifyListeners();
     return result;
   }

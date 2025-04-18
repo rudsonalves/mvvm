@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:mvvm/domain/user_cases/todo_user_case.dart';
 
 import '/data/repositories/todos/todos_repository.dart';
@@ -28,14 +29,19 @@ class TodoDetailsViewModel extends ChangeNotifier {
   late Todo _todo;
   Todo get todo => _todo;
 
+  final _log = Logger('TodoDetailsViewModel');
+
   Future<Result<Todo>> _loadTodo(String id) async {
     final result = await _todoRepository.get(id);
 
     result.fold(
       onOk: (todo) {
         _todo = todo;
+        _log.fine('Todo loaded');
       },
-      onError: (error) {},
+      onError: (error) {
+        _log.warning(error.toString());
+      },
     );
 
     notifyListeners();

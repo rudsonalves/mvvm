@@ -4,6 +4,45 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/04/17 - version: 0.6.01+14
+
+### Add structured logging with `logging` package and refactor `main.dart`
+
+This commit introduces the `logging` package for consistent log handling throughout the application. It centralizes the logger initialization, extracts the main application logic into a new `MyApp` class, and enhances error visibility in view models and use cases through structured logging.
+
+### Modified Files
+
+**lib/main.dart**
+- Initialized the root logger with `Logger.root`.
+- Forwarded all logs to `debugPrint`.
+- Moved app UI to a new `MyApp` widget class for cleaner structure.
+
+**lib/domain/user_cases/todo_user_case.dart**
+- Replaced `dart:developer` usage with `Logger` from the `logging` package.
+- Added structured logs for both success and failure paths in `addTodo` and `upgradeTodo`.
+
+**lib/ui/features/todo/todo_view_model.dart**
+- Introduced `Logger` instance.
+- Added detailed logging for `addTodo`, `deleteTodo`, and `load` operations.
+
+**lib/ui/features/todo_details/todo_details_view_model.dart**
+- Added logging for loading individual `Todo` items.
+- Now logs both success and error cases for `_loadTodo`.
+
+**server/db.json**
+- Updated timestamps to reflect current sample data changes.
+
+### New Files
+
+**lib/my_app.dart**
+- Created a dedicated `MyApp` widget to encapsulate theming, routing, and inherited theme management.
+- Modularized the main application UI logic.
+
+### Conclusion
+
+The integration of the `logging` package improves observability and debugging across the application. Centralizing the app layout into `MyApp` also promotes better separation of concerns and scalability. All features continue to function as expected.
+
+
 ## 2025/04/17 - version: 0.6.00+13
 
 ### Integrate `Provider` for Dependency Injection and Centralize App Configuration
