@@ -14,23 +14,23 @@ class EditTodoDialog extends StatefulWidget {
 }
 
 class _EditTodoDialogState extends State<EditTodoDialog> {
-  final nameController = TextEditingController();
-  final descriptionConreoller = TextEditingController();
+  final _nameController = TextEditingController();
+  final _descriptionConreoller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     if (widget.todo != null) {
-      nameController.text = widget.todo!.name;
-      descriptionConreoller.text = widget.todo!.description;
+      _nameController.text = widget.todo!.name;
+      _descriptionConreoller.text = widget.todo!.description;
     }
     super.initState();
   }
 
   @override
   void dispose() {
-    nameController.dispose();
-    descriptionConreoller.dispose();
+    _nameController.dispose();
+    _descriptionConreoller.dispose();
 
     super.dispose();
   }
@@ -47,37 +47,29 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
             Padding(
               padding: const EdgeInsets.only(top: 18, bottom: 12),
               child: TextFormField(
-                controller: nameController,
+                controller: _nameController,
                 decoration: const InputDecoration(
                   label: Text('Título'),
                   hintText: 'Título da tarefa',
                   border: OutlineInputBorder(),
                 ),
                 textCapitalization: TextCapitalization.words,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Preencha um título para a Tarefa';
-                  }
-                  return null;
-                },
+                validator: _validateTitle,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 18, bottom: 12),
               child: TextFormField(
-                controller: descriptionConreoller,
+                controller: _descriptionConreoller,
+                minLines: 3,
+                maxLines: null,
                 decoration: const InputDecoration(
                   label: Text('Descrição'),
                   hintText: 'Descrição da tarefa',
                   border: OutlineInputBorder(),
                 ),
                 textCapitalization: TextCapitalization.sentences,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Adicione uma descrição';
-                  }
-                  return null;
-                },
+                validator: _validateDescription,
               ),
             ),
           ],
@@ -113,18 +105,32 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
     );
   }
 
+  String? _validateDescription(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Adicione uma descrição';
+    }
+    return null;
+  }
+
+  String? _validateTitle(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Preencha um título para a Tarefa';
+    }
+    return null;
+  }
+
   Future<void> _addTodo() async {
     if (widget.todoAction.running) return;
 
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       final newTodo =
           widget.todo?.copyWith(
-            name: nameController.text.trim(),
-            description: descriptionConreoller.text.trim(),
+            name: _nameController.text.trim(),
+            description: _descriptionConreoller.text.trim(),
           ) ??
           Todo(
-            name: nameController.text.trim(),
-            description: descriptionConreoller.text.trim(),
+            name: _nameController.text.trim(),
+            description: _descriptionConreoller.text.trim(),
           );
 
       await widget.todoAction.execute(newTodo);

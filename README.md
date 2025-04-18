@@ -4,6 +4,25 @@ A new Flutter project.
 
 # Changelog
 
+## 2025/04/17 - version: 0.5.04+10
+
+### Refactor `EditTodoDialog` for Code Clarity and Form Validation
+
+This commit enhances the `EditTodoDialog` by improving code readability, encapsulating form validation logic, and enforcing naming conventions for private fields. The update introduces dedicated validator methods and better field naming for maintainability.
+
+### Modified Files
+
+- **`lib/ui/core/widgets/edit_todo_dialog.dart`**
+  - Renamed `nameController` to `_nameController` and `descriptionConreoller` to `_descriptionConreoller` to follow Dart naming conventions for private members.
+  - Moved validation logic for form fields to private helper methods (`_validateTitle`, `_validateDescription`).
+  - Added `minLines` and `maxLines` to the description field to improve multi-line input UX.
+  - Simplified form logic in `_addTodo()` using trimmed values from the renamed controllers.
+
+### Conclusion
+
+This refactor improves consistency, separates validation concerns, and ensures that `EditTodoDialog` remains maintainable as the codebase evolves.
+
+
 ## 2025/04/17 - version: 0.5.04+09
 
 ### Refactor Todo Dialog and Details Components for Improved Clarity

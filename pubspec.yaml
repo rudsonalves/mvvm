@@ -1,7 +1,7 @@
 name: mvvm
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 0.5.04+09
+version: 0.5.04+10
 
 environment:
   sdk: ^3.7.2
